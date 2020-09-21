@@ -1,0 +1,2 @@
+This is the creation of both the Service Mesh Control Plane and the Service Mesh Member Roll
+the associated file for the creation of both is acm-create-meshcontrolplane.sh
