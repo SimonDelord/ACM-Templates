@@ -3,11 +3,11 @@ These various Resources folders contain all the templates I have used for deploy
 
 The various Resources folders contain the YAML files with the various apps / config files.
 The acm-create.sh files then contain the various RHACM files for Namespaces, Channels, Subscriptions, Placement Rules & Applications wrapped into a single file:
-    - acm-create.sh : RHACM YAML files for Resources (deployment of hello-world app)
-    - acm-create-app-with-vm.sh: RHACM YAML files for Resources2 (deployment of hybrid app running VM + Container)
-    - acm-create-operator.sh: RHACM YAML files for Resources3 (deployment of a group of Operators (Service-Mesh & dependencies))
-    - acm-create-meshcontrolplane.sh: RHACM YAML files for Resources5 (configuration of the Service-mesh operator - control plane & members)
-    - acm-create-istio-app-bookinfo.sh: RHACM YAML files for Resources4 (deployment of Istio sample bookinfo app)
+- acm-create.sh : RHACM YAML files for Resources (deployment of hello-world app)
+- acm-create-app-with-vm.sh: RHACM YAML files for Resources2 (deployment of hybrid app running VM + Container)
+- acm-create-operator.sh: RHACM YAML files for Resources3 (deployment of a group of Operators (Service-Mesh & dependencies))
+- acm-create-meshcontrolplane.sh: RHACM YAML files for Resources5 (configuration of the Service-mesh operator - control plane & members)
+- acm-create-istio-app-bookinfo.sh: RHACM YAML files for Resources4 (deployment of Istio sample bookinfo app)
 
 ### Resources
 
@@ -35,9 +35,9 @@ Resource 4 is the actual Istio app - book-info (Istio sample application availab
 Resource 5 is the configuration of the Service-mesh Operator 
 
 The logical steps are then to deploy:
-    - Resources3
-    - Resources5
-    - Resources4
+- Resources3
+- Resources5
+- Resources4
 
 ### Resources3
 
@@ -50,5 +50,5 @@ Contains the YAML files for the deployment of the Istio sample application book-
 ### Resources5
 
 Contains the YAML files for the configuration of the Istio Operator
-    - basic-install.yaml : is the ServiceMesh control plane configuration in the istio-system namespace
-    - ServiceMeshMemberRoll.yaml: is the members (namespaces) to which the Service Mesh Control Plane is applied to.
+- basic-install.yaml : is the ServiceMesh control plane configuration in the istio-system namespace
+- ServiceMeshMemberRoll.yaml: is the members (namespaces) to which the Service Mesh Control Plane is applied to.
