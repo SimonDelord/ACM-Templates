@@ -52,3 +52,15 @@ Contains the YAML files for the deployment of the Istio sample application book-
 Contains the YAML files for the configuration of the Istio Operator
 - basic-install.yaml : is the ServiceMesh control plane configuration in the istio-system namespace
 - ServiceMeshMemberRoll.yaml: is the members (namespaces) to which the Service Mesh Control Plane is applied to.
+
+## Resources 6 & 7 are used for VNF deployments
+
+Those are Resource folders for various VNF deployments. At the moment, I have played with Fortigate (from Fortinet) in Resource 6 and F5 LTM in Resource 7.
+
+### Resources 6
+
+Resource 6 contains the YAML files for the deployment of a Fortigate VNF (single vNIC at this point). This requires the OpenShift Virtualisation Operator to work.
+
+### Resources 7
+
+It contains the YAML for the deployment of an F5-LTM. I am really grateful to Nabeel Cocker for helping out with the various YAML files for this VNF.
