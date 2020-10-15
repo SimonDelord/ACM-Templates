@@ -1,0 +1,84 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  annotations:
+    description: fortinet fortigate
+    kubevirt.io/latest-observed-api-version: v1alpha3
+    kubevirt.io/storage-observed-api-version: v1alpha3
+    name.os.template.kubevirt.io/rhel6.10: Red Hat Enterprise Linux 6.0 or higher
+  selfLink: /apis/kubevirt.io/v1alpha3/namespaces/default/virtualmachines/f5
+  name: fortigate-tiny
+  generation: 5
+  managedFields:
+  namespace: default
+  labels:
+    app: fortigate-tiny
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1alpha1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: fortios
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://vnf-repo.s3-ap-southeast-2.amazonaws.com/fortios.qcow2
+      status: {}
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: fortigate-tiny
+        os.template.kubevirt.io/rhel6.10: 'true'
+        vm.kubevirt.io/name: fortigate-tiny
+        workload.template.kubevirt.io/server: 'true'
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - bootOrder: 1
+              disk:
+                bus: sata
+              name: fortios
+          interfaces:
+            - masquerade: {}
+              model: virtio
+              name: nic-0
+            - bridge: {}
+              model: virtio
+              name: nic-1
+          networkInterfaceMultiqueue: true
+          rng: {}
+        machine:
+          type: pc-q35-rhel8.2.0
+        resources:
+          requests:
+            memory: 1Gi
+      hostname: fortigate-tiny
+      networks:
+        - name: nic-0
+          pod: {}
+        - multus:
+             networkName: multus1
+          name: nic-1
+      terminationGracePeriodSeconds: 180
+      volumes:
+        - dataVolume:
+            name: fortios
+          name: fortios
+

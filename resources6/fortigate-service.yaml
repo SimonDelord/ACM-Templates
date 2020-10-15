@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fortigate-tiny-service
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/fortigate-service  
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32248
+  selector:
+    kubevirt.io/domain: fortigate-tiny
+    os.template.kubevirt.io/rhel6.10: 'true'
+    vm.kubevirt.io/name: fortigate-tiny
+    workload.template.kubevirt.io/server: 'true'
+  clusterIP: 172.30.241.67
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}

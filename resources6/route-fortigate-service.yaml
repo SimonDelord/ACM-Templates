@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: fortigate-tiny-service
+  namespace: default
+  selfLink: /apis/route.openshift.io/v1/namespaces/default/routes/fortigate-service
+  annotations:
+    openshift.io/host.generated: 'true'  
+spec:  
+  to:
+    kind: Service
+    name: fortigate-tiny-service
+    weight: 100
+  port:
+    targetPort: 80
+  wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+        - type: Admitted
+          status: 'True'
+      
