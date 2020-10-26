@@ -79,7 +79,7 @@ spec:
           type: pc-q35-rhel8.2.0
         resources:
           requests:
-            memory: 2Gi
+            memory: 1Gi
       evictionStrategy: LiveMigrate
       hostname: f5-ltm-v3
       networks:
