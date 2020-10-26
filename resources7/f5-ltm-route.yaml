@@ -1,0 +1,51 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+    haproxy.router.openshift.io/timeout: 300s
+    router.openshift.io/haproxy.health.check.interval: 300s
+    haproxy.router.openshift.io/balance: source
+  name: f5-ltm-v3-route  
+  namespace: default
+  labels:
+    app: f5-ltm-v3
+spec:
+  host: f5-ltm-v3.apps.ocpbare2.melbourneocp.net
+  to:
+    kind: Service
+    name: f5-ltm-v3
+    weight: 100
+  port:
+    targetPort: 443
+  tls:
+    termination: reencrypt
+    destinationCACertificate: |
+      -----BEGIN CERTIFICATE-----
+      MIIENjCCAx6gAwIBAgIJAK/QfdHjJs/nMA0GCSqGSIb3DQEBCwUAMIGbMQswCQYD
+      VQQGEwItLTELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1NlYXR0bGUxEjAQBgNVBAoM
+      CU15Q29tcGFueTEOMAwGA1UECwwFTXlPcmcxHjAcBgNVBAMMFWxvY2FsaG9zdC5s
+      b2NhbGRvbWFpbjEpMCcGCSqGSIb3DQEJARYacm9vdEBsb2NhbGhvc3QubG9jYWxk
+      b21haW4wHhcNMjAxMDI2MjAzNjExWhcNMzAxMDI0MjAzNjExWjCBmzELMAkGA1UE
+      BhMCLS0xCzAJBgNVBAgMAldBMRAwDgYDVQQHDAdTZWF0dGxlMRIwEAYDVQQKDAlN
+      eUNvbXBhbnkxDjAMBgNVBAsMBU15T3JnMR4wHAYDVQQDDBVsb2NhbGhvc3QubG9j
+      YWxkb21haW4xKTAnBgkqhkiG9w0BCQEWGnJvb3RAbG9jYWxob3N0LmxvY2FsZG9t
+      YWluMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp00Dsf25R3gUoT91
+      CdrdThAMW8/Nh9+R9ZF3ZXHcuu9tDwV7MuD8UNrX/ofsa+LnQNQWUMK8kj7ECbYI
+      D+zqauTRwnPOHCuPFSuBgTdU07gL84bxGD+n1/HGMtbfCFmZ1x88BE8BrnNaDhRy
+      5oCoARKw9bCYgXBCeIjklV6H26pTBYye/dHmG0wfYeWhHi45WenokcUy1K53pUdv
+      FIJFazGsG3UgGj4DeJx5Re/wJuf/vt/+SLmuRMZ9j/kh1D/jbXkp59F9alI6CqU3
+      8PwG/CgwpTRauZuCE5aQjiAby+PEBFzIjyv9VpA6OA5uNY37foh0KuQ09bKH2zly
+      2oRBZQIDAQABo3sweTAJBgNVHRMEAjAAMCwGCWCGSAGG+EIBDQQfFh1PcGVuU1NM
+      IEdlbmVyYXRlZCBDZXJ0aWZpY2F0ZTAdBgNVHQ4EFgQUrDTSUse8k88ImXX41RFO
+      Nw9kuawwHwYDVR0jBBgwFoAUrDTSUse8k88ImXX41RFONw9kuawwDQYJKoZIhvcN
+      AQELBQADggEBADM/ELLiLi4sOeqj4HeSsGIXviFqSgL6ZrVGq+KfUHr35cchht6K
+      GQM+1LxjIts0BGWnRV00ZZp8G6eiVJJi/ojxOlOBqBRJya4gGvHYkuMjTK1fkEEB
+      4OkPfLdVXff84ZoGtsakK0rxFGui99kP8K3Jc41LJJcIroNz1eDtud/EFOmjNlWz
+      md6JvuBO014aQndWgzAJhvtVROchL5Q5FXj/jgj53gWKRt0Kl2bSUUKZRhBjKHrQ
+      OzrJAPKDJCv+4vpJYdnXvDX++XSMKGk7/Mo+Xqzg0Lv2IYUt0KzbW/AuFLI81bea
+      92AZcVAMLpv+EZSQIDfDZAynhoi+NuIIBnw=
+      -----END CERTIFICATE-----
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+
