@@ -45,8 +45,8 @@ spec:
         vm.kubevirt.io/name: f5-ltm-v3
         workload.template.kubevirt.io/server: 'true'
     spec:
-      nodeSelector: 
-        supportvnf: master-0
+#      nodeSelector: 
+#        supportvnf: master-0
       domain:
         cpu:
           cores: 1
