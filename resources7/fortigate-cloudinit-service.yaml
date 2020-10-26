@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fortigate-tiny-cloudinit-service
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/fortigate-service  
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    kubevirt.io/domain: fortigate-tiny-cloudinit
+    vm.kubevirt.io/name: fortigate-tiny-cloudinit
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}

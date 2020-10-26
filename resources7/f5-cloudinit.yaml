@@ -1,0 +1,119 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  annotations:
+    description: f5 ltm with multinic and initial config
+    kubevirt.io/latest-observed-api-version: v1alpha3
+    kubevirt.io/storage-observed-api-version: v1alpha3
+    name.os.template.kubevirt.io/rhel6.10: Red Hat Enterprise Linux 6.0 or higher
+    k8s.v1.cni.cncf.io/networks: "multus3,multus4"
+  selfLink: /apis/kubevirt.io/v1alpha3/namespaces/default/virtualmachines/f5
+  name: f5-ltm-v3
+  generation: 5
+  managedFields:
+  namespace: default
+  labels:
+    app: f5-ltm-v3    
+spec:  
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1alpha1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: f5-ltm-v3-rootdisk
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 25Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://vnf-repo-europe.s3.eu-central-1.amazonaws.com/BIGIP-16.0.0.1-0.0.3.qcow2
+      status: {}
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: f5-ltm-v3
+        os.template.kubevirt.io/rhel6.10: 'true'
+        vm.kubevirt.io/name: f5-ltm-v3
+        workload.template.kubevirt.io/server: 'true'
+    spec:
+      nodeSelector: 
+        supportvnf: master-0
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - bootOrder: 1
+              disk:
+                bus: sata
+              name: f5-ltm-v3-rootdisk
+            - name: cloudinitvolume
+              disk:
+                bus: virtio 
+          interfaces:
+#            - bridge: {}
+#              model: virtio
+#              name: mgmt
+            - name: mgmt
+              masquerade: {}
+            - bridge: {}
+              model: virtio
+              name: internal
+            - bridge: {}
+              model: virtio
+              name: external
+          networkInterfaceMultiqueue: true
+          rng: {}
+        machine:
+          type: pc-q35-rhel8.2.0
+        resources:
+          requests:
+            memory: 2Gi
+      evictionStrategy: LiveMigrate
+      hostname: f5-ltm-v3
+      networks:
+        - name: mgmt
+          pod: {}
+        - multus:
+            networkName: multus3
+          name: external
+        - multus:
+            networkName: multus4
+          name: internal
+      terminationGracePeriodSeconds: 180
+      volumes:
+        - dataVolume:
+            name: f5-ltm-v3-rootdisk
+          name: f5-ltm-v3-rootdisk
+        - name: cloudinitvolume
+          cloudInitConfigDrive:
+            userData: |-
+              #cloud-config
+              write_files:
+              - path: /config/cloud/config.sh
+                permissions: 0755
+                owner: root:root
+                content: |
+                  #!/bin/bash
+                  source /usr/lib/bigstart/bigip-ready-functions
+                  wait_bigip_ready
+                  tmsh save /sys config
+                  tmsh create sys management-route default gateway 10.129.1.2
+                  tmsh modify sys global-settings hostname bigip1.simon.test
+                  tmsh modify sys httpd auth-pam-validate-ip off
+                  tmsh save sys config
+              runcmd:
+              # NOTE: Commands must be non-blocking so send long running commands (polling/waiting for mcpd) to the background
+              - /config/cloud/config.sh &
+

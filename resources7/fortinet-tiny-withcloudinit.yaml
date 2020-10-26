@@ -1,0 +1,112 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  annotations:
+    description: fortinet fortigate
+    kubevirt.io/latest-observed-api-version: v1alpha3
+    kubevirt.io/storage-observed-api-version: v1alpha3
+    name.os.template.kubevirt.io/rhel6.10: Red Hat Enterprise Linux 6.0 or higher
+    k8s.v1.cni.cncf.io/networks: "multus3"
+  selfLink: /apis/kubevirt.io/v1alpha3/namespaces/default/virtualmachines/f5
+  name: fortigate-tiny-cloudinit
+  generation: 5
+  managedFields:
+  namespace: default
+  labels:
+    app: fortigate-tiny-cloudinit
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1alpha1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: fortios-cloudinit
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://vnf-repo.s3-ap-southeast-2.amazonaws.com/fortios.qcow2
+      status: {}
+    - apiVersion: cdi.kubevirt.io/v1alpha1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: configuration-iso
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://vnf-repo.s3-ap-southeast-2.amazonaws.com/fgt-bootstrap.iso
+      status: {}
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: fortigate-tiny-cloudinit
+        os.template.kubevirt.io/rhel6.10: 'true'
+        vm.kubevirt.io/name: fortigate-tiny-cloudinit
+        workload.template.kubevirt.io/server: 'true'
+    spec:
+      nodeSelector:
+        supportvnf: master-0
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - bootOrder: 1
+              disk:
+                bus: sata
+              name: fortios-cloudinit
+            - disk:
+                bus: sata
+              name: configuration-iso
+          interfaces:
+            - bridge: {}
+              model: virtio
+              name: nic-0
+            - bridge: {}
+              model: virtio
+              name: nic-1
+          networkInterfaceMultiqueue: true
+          rng: {}
+        machine:
+          type: pc-q35-rhel8.2.0
+        resources:
+          requests:
+            memory: 1Gi
+      hostname: fortigate-tiny-cloudinit
+      networks:
+        - name: nic-0
+          pod: {}
+        - multus:
+             networkName: multus3
+          name: nic-1
+      terminationGracePeriodSeconds: 180
+      volumes:
+        - dataVolume:
+            name: fortios-cloudinit
+          name: fortios-cloudinit
+        - dataVolume:
+            name: configuration-iso
+          name: configuration-iso
+
