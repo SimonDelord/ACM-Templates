@@ -1,0 +1,64 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+metadata:
+  labels:
+  name: vmi-fedora-4
+  annotations:
+    k8s.v1.cni.cncf.io/networks: "multus3,multus4"
+spec:
+  nodeSelector:
+    supportvnf: master-0
+  domain:
+    devices:
+      disks:
+        - disk:
+            bus: virtio
+          name: containerdisk
+        - disk:
+            bus: virtio
+          name: cloudinitdisk
+      interfaces:
+        - bridge: {}
+          name: default
+        - bridge: {}
+          name: multus3
+        - bridge: {}
+          name: multus4
+      rng: {}
+    features:
+      acpi:
+        enabled: true
+    firmware:
+      uuid: 6ae2c0c3-7024-4e5c-b775-ab3c48d182a6
+    machine:
+      type: pc-q35-rhel8.2.0
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256M
+  networks:
+    - name: default
+      pod: {}
+    - multus:
+        networkName: multus3
+      name: multus3
+    - multus:
+        networkName: multus4
+      name: multus4
+  terminationGracePeriodSeconds: 0
+  volumes:
+    - containerDisk:
+        image: 'kubevirt/fedora-cloud-container-disk-demo:v0.21.0'
+        imagePullPolicy: IfNotPresent
+      name: containerdisk
+    - cloudInitNoCloud:
+        userData: |
+          #cloud-config
+          hostname: fedora-4
+          password: fedora
+          chpasswd: { expire: False }
+          ssh_pwauth: True
+          disable_root: false
+          ssh_authorized_keys:
+            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsYL8SnJf3blzXmsqJrdyz8RF88W+k9tv/5muoL9ieUGpI67cCKbzCInfKRiuMaDd51D8f+ezZzwx6x/sSbhaDIA90cPBCJIVXY3sVLTSIYK+EzfzDdgYBdpphsRCapwK++5Yev68NT/02BJRbqXhNrYcE4bj2GEQX6Tq8n3LqOYg3j5TvmCBvxut7qztn16rNHFBFF2K/AEavzkyFrzaddFAdVzmV79zBAhCYwoRWhXffMr0NxihxdbglT7qNRtJbOlvBgbYinn2rSsXrSF+1TdCHk3Uo+H5q2sfSDtMQCN32Oh+bCG/zxwL8p2hbdC6AKIk3LzICTqFa+gRCvOWR 
+      name: cloudinitdisk
