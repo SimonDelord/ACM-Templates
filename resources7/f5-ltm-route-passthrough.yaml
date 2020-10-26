@@ -1,0 +1,25 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+    haproxy.router.openshift.io/timeout: 300s
+    router.openshift.io/haproxy.health.check.interval: 300s
+    haproxy.router.openshift.io/balance: source
+  name: f5-ltm-v3-route  
+  namespace: default
+  labels:
+    app: f5-ltm-v3
+spec:
+  host: f5-ltm-v3.apps.ocpbare2.melbourneocp.net
+  to:
+    kind: Service
+    name: f5-ltm-v3
+    weight: 100
+  port:
+    targetPort: 443
+  tls:
+    termination: passthrough    
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+
