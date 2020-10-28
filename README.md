@@ -55,7 +55,7 @@ Contains the YAML files for the configuration of the Istio Operator
 
 ## Resources 6 & 7 are used for VNF deployments
 
-Those are Resource folders for various VNF deployments. At the moment, I have played with Fortigate (from Fortinet) in Resource 6 and F5 LTM in Resource 7.
+Those are Resource folders for various VNF deployments. At the moment, I have played with Fortigate (from Fortinet) in Resource 6 and a service chaining scenario covering ,F5 LTM, Fortigate and Fedora VM in Resources 7.
 
 ### Resources 6
 
@@ -63,4 +63,16 @@ Resource 6 contains the YAML files for the deployment of a Fortigate VNF (single
 
 ### Resources 7
 
-It contains the YAML for the deployment of an F5-LTM. I am really grateful to Nabeel Cocker for helping out with the various YAML files for this VNF.
+It contains the YAML files for the deployment of the service-chaining demo. It contains an F5-LTM, a Fortigate and a Fedora VM. 
+I am really grateful to Nabeel Cocker for helping out with the various YAML files for the F5-LTM.
+
+In this demo, each VNF/VM is spun up with multiple network interfaces attached to various networks on the OCP cluster.
+Each VNF/VM is also setup with a day-0 config (e.g initial config allowing network connectivity to the other VNFs/VMs and setup for accessing the management interface).
+You may have to tweak your day0 config based on the specifics of your environments. For my demo I used an Hetzner server with nested virtualisation setup (e.g VMs running within VMs).
+
+For the Fortigate I created an iso file for day 0 config (following those instructions - https://docs.fortinet.com/document/fortigate/6.0.0/fortigate-vm-on-kvm/767662/cloud-init) 
+For both the Fedora VM and the F5-LTM I used the CloudInit capability that's part of OCP Virtualisation (E.g these are embedded in the YAML definition of the VMs and VNFs - see the YAML files under resources7).
+
+I have exposed via routes both the Fortigate and the F5-LTM. This requires a fair bit of tweaking and a "more production like" solution would probably define an out of band network that management interfaces attach to rather than the standard PoD Network that I'm using. For the Fortigate I simply used port 80 (e.g http) while I used port 443 for the F5-LTM (there's a fair bit of tweaking there too in regards to setting up a route as a passthrough first and then a "reencrypt" method for the F5 self-signed CA). 
+
+
