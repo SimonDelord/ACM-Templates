@@ -1,0 +1,2 @@
+This repo is specifically for deploying "scaling" information for an OCP cluster.
+It contains Machine Autoscalers and a Cluster Autoscaler
