@@ -1,0 +1,140 @@
+# This policy verifies the installation of the official & supported version of
+# the Elasitc Operator on the managed clusters.
+#
+# If set to "enforce" it'll install the operator.
+#
+# Note that OpenShift 4.6 is required.
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-servicemesh-operators
+  annotations:
+    policy.open-cluster-management.io/standards: Simon
+    policy.open-cluster-management.io/categories: Operators
+    policy.open-cluster-management.io/controls: Hello again
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: servicemesh-operators-ns
+        spec:
+          remediationAction: inform # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: openshift-operators
+#    - objectDefinition:
+#        apiVersion: policy.open-cluster-management.io/v1
+#        kind: ConfigurationPolicy
+#        metadata:
+#          name: servicemesh-operators-operator-group
+#        spec:
+#          remediationAction: inform # will be overridden by remediationAction in parent policy
+#          severity: high
+#          object-templates:
+#            - complianceType: musthave
+#              objectDefinition:
+#                apiVersion: operators.coreos.com/v1
+#                kind: OperatorGroup
+#                metadata:
+#                  name: servicemesh-operators
+#                  namespace: openshift-operators
+#                spec:
+#                  targetNamespaces:
+#                    - openshift-operators
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: kiali-operator-subscription
+        spec:
+          remediationAction: inform  # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: kiali-operator
+                  namespace: openshift-operators
+                spec:
+                  installPlanApproval: Automatic
+                  name: kiali-ossm
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: jaeger-operator-subscription
+        spec:
+          remediationAction: inform  # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: jaeger-operator
+                  namespace: openshift-operators
+                spec:
+                  installPlanApproval: Automatic
+                  name: jaeger-product
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: servicemesh-operator-subscription
+        spec:
+          remediationAction: inform  # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: servicemesh-operator
+                  namespace: openshift-operators
+                spec:
+                  installPlanApproval: Automatic
+                  name: servicemeshoperator
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-servicemesh-operators
+placementRef:
+  name: placement-policy-servicemesh-operators
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-servicemesh-operators
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-servicemesh-operators
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: environment, operator: In, values: ["dev"]}
