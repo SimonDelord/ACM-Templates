@@ -78,10 +78,12 @@ I have exposed via routes both the Fortigate and the F5-LTM management interface
 This requires a some tweaking and a "more production like" solution would probably define an out of band network that management interfaces attach to rather than the standard PoD Network that I'm using. 
 For the Fortigate I simply used port 80 (e.g http) while I used port 443 for the F5-LTM (there's a fair bit of tweaking there too in regards to setting up a route as a passthrough first and then a "reencrypt" method for the F5 self-signed CA). 
 
+## Resources 8 for MachineAutoscaler and ClusterAutoscaler 
 ### Resources 8 
 
 Resource 8 contains the various YAML files for the deployment of ClusterAutoscaler and MachineAutoscaler for a video/demo of ACM deploying those capabilities.
 
+## Resources 9 for Deploying Operators using Policies (GRC section of ACM) 
 ### Resources 9
 
 Resource 9 contains the YAML files for the deployment of the Operators required in Service Mesh (Elasticsearch, Kiali, Jaeger and ServiceMesh). But this time at the difference of using "Applications" for it, it is being done using Policies. Be careful on the use of OperatorGroup (if it's global scope, just don't include it in the ConfigurationPolicy as you will see it's greyed out). You can then reuse Resources 5 (for the Service Mesh MemberRoll and Control PLane setups) and Resource 4 for the book-info app.
