@@ -1,0 +1,2 @@
+This is the repo for the Operators files (but using a Policy as opposed to an Application).
+I have included here the same example of Service-mesh (Elasticsearch, Kiali, Jaeger and Red Hat ServiceMesh)
