@@ -9,9 +9,9 @@ kind: Policy
 metadata:
   name: policy-elasticsearch-operator
   annotations:
-    policy.open-cluster-management.io/standards: Simon
-    policy.open-cluster-management.io/categories: Operators
-    policy.open-cluster-management.io/controls: Hello
+    policy.open-cluster-management.io/standards: ACME-Standards
+    policy.open-cluster-management.io/categories: Operators-Install
+    policy.open-cluster-management.io/controls: ElasticSearch-Operator
 spec:
   remediationAction: inform
   disabled: false
