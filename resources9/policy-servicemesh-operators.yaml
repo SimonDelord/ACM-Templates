@@ -1,5 +1,5 @@
 # This policy verifies the installation of the official & supported version of
-# the Elasitc Operator on the managed clusters.
+# the Kiali, Jaeger and Service Mesh Operators on the managed clusters.
 #
 # If set to "enforce" it'll install the operator.
 #
