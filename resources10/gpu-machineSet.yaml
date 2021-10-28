@@ -1,0 +1,63 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: ocp-gpu-9qcth-worker-gpu-eu-west-2a
+  generation: 1
+  namespace: openshift-machine-api
+  labels:
+    machine.openshift.io/cluster-api-cluster: ocp-gpu-9qcth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ocp-gpu-9qcth
+      machine.openshift.io/cluster-api-machineset: ocp-gpu-9qcth-worker-gpu-eu-west-2a
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ocp-gpu-9qcth
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: ocp-gpu-9qcth-worker-gpu-eu-west-2a
+    spec:
+      metadata: {}
+      providerSpec:
+        value:
+          userDataSecret:
+            name: worker-user-data
+          placement:
+            availabilityZone: eu-west-2a
+            region: eu-west-2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          instanceType: g4dn.4xlarge
+          metadata:
+            creationTimestamp: null
+          blockDevices:
+            - ebs:
+                encrypted: true
+                iops: 0
+                kmsKey:
+                  arn: ''
+                volumeSize: 120
+                volumeType: gp2
+          securityGroups:
+            - filters:
+                - name: 'tag:Name'
+                  values:
+                    - ocp-gpu-9qcth-worker-gpu-sg
+          kind: AWSMachineProviderConfig
+          tags:
+            - name: kubernetes.io/cluster/ocp-gpu-9qcth
+              value: owned
+          deviceIndex: 0
+          ami:
+            id: ami-085a97ac58c1199b8
+          subnet:
+            filters:
+              - name: 'tag:Name'
+                values:
+                  - ocp-gpu-9qcth-private-eu-west-2a
+          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          iamInstanceProfile:
+            id: ocp-gpu-9qcth-worker-profile
