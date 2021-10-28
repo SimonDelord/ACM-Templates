@@ -1,6 +1,10 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
+  annotations:
+    machine.openshift.io/GPU: '1'
+    machine.openshift.io/memoryMb: '16384'
+    machine.openshift.io/vCPU: '16'
   name: ocp-gpu-9qcth-worker-gpu-eu-west-2a
   generation: 1
   namespace: openshift-machine-api
