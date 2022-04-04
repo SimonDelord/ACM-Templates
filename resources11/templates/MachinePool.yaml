@@ -1,0 +1,18 @@
+---
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: {{ .Values.clusterName }}-worker
+  namespace: {{ .Values.clusterName }}
+spec:
+  clusterDeploymentRef:
+    name: {{ .Values.clusterName }}
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: {{ .Values.worker.rootVolume.iops }}
+        size: {{ .Values.worker.rootVolume.size }}
+        type: {{ .Values.worker.rootVolume.type }}
+      type: {{ .Values.worker.type }}
+  replicas: {{ .Values.worker.replicas }}
