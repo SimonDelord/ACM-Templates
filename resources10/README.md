@@ -1,3 +1,0 @@
-This is the repo for "creating" clusters via ACM using the work done by J. Packer 
-https://drive.google.com/file/d/1Nj3lSiQ3EPkCxPpqIvF046Qgb8F-ouvh/view is his video 
-https://github.com/jnpacker/cluster-deploy-chart is his Git repo for all of that
