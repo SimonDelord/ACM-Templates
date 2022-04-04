@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-install-config
+  namespace: {{ .Values.clusterName }}
+type: Opaque
+stringData:
+  install-config.yaml: |-
+    apiVersion: v1
+    metadata:
+      name: {{ .Values.clusterName }}
+    baseDomain: {{ .Values.baseDomain }}
+    controlPlane:
+      hyperthreading: Enabled
+      name: master
+      platform:
+        aws:
+          rootVolume:
+            iops: {{ .Values.master.rootVolume.iops }}
+            size: {{ .Values.master.rootVolume.size }}
+            type: {{ .Values.master.rootVolume.type }}
+          type: {{ .Values.master.type }}
+      replicas: {{ .Values.master.replicas }}
+    compute:
+    - hyperthreading: Enabled
+      name: worker
+      platform:
+        aws:
+          rootVolume:
+            iops: {{ .Values.worker.rootVolume.iops }}
+            size: {{ .Values.worker.rootVolume.size }}
+            type: {{ .Values.worker.rootVolume.type }}
+          type: {{ .Values.worker.type }}
+      replicas: {{ .Values.worker.replicas }}
+    networking:
+      clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+      machineCIDR: 10.0.0.0/16
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.30.0.0/16
+    platform:
+      aws:
+        region: {{ .Values.region }}
+    pullSecret: "" # skip, hive will inject based on it's secrets
+    sshKey: |-
+        {{ .Values.publicKey }}
