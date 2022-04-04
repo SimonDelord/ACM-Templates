@@ -5,10 +5,10 @@ clusterName:
 baseDomain: 
 
 # AWS region
-region: us-east-1
+region: eu-west-1
 
 # OpenShift version to deploy
-imageVersion: img4.6.1-x86-64
+imageVersion: img4.9.25-x86-64-appsub
 
 # Labels to apply to the cluster
 extraLabels:
