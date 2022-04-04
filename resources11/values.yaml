@@ -1,8 +1,8 @@
 #Cluster name to use
-clusterName:
+clusterName: simon-test-aws
 
   # Cluster basedomain defined in Route 53 
-baseDomain: 
+baseDomain: melbourneopenshift.com
 
 # AWS region
 region: eu-west-1
