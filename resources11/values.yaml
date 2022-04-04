@@ -16,7 +16,7 @@ extraLabels:
 
 cloudProvider:
   secretRef:
-    name:
+    name: aws4sd
 
 # Worker node details
 worker:
