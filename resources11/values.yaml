@@ -1,0 +1,64 @@
+#Cluster name to use
+clusterName:
+
+  # Cluster basedomain defined in Route 53 
+baseDomain: 
+
+# AWS region
+region: us-east-1
+
+# OpenShift version to deploy
+imageVersion: img4.6.1-x86-64
+
+# Labels to apply to the cluster
+extraLabels:
+  usage: development
+
+cloudProvider:
+  secretRef:
+    name:
+
+# Worker node details
+worker:
+  rootVolume:
+    iops: 100
+    size: 100
+    type: gp2
+  type: m5.2xlarge
+  replicas: 3
+
+# Master node details
+master:
+  rootVolume:
+    iops: 100
+    size: 100
+    type: gp2
+  type: m5.2xlarge
+  replicas: 3
+
+# Networking details
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineCIDR: 10.0.0.0/16
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+
+# Add-on controls
+addOns:
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
+  version: 2.1.0
+
+# Public Key for access to the cluster
+publicKey:
