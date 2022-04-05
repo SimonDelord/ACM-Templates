@@ -1,0 +1,124 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: 'simon-test-aws'
+  namespace: 'simon-test-aws'
+  labels:
+    cloud: 'AWS'
+    region: 'eu-west-1'
+    vendor: OpenShift
+spec:
+  baseDomain: melbourneopenshift.com
+  clusterName: 'simon-test-aws'
+  controlPlaneConfig:
+    servingCertificates: {}
+  installAttemptsLimit: 1
+  installed: false
+  platform:
+    aws:
+      credentialsSecretRef:
+        name: simon-test-aws-aws-creds
+      region: eu-west-1
+  provisioning:
+    installConfigSecretRef:
+      name: simon-test-aws-install-config
+    sshPrivateKeySecretRef:
+      name: simon-test-aws-ssh-private-key
+    imageSetRef:
+       #quay.io/openshift-release-dev/ocp-release:4.9.25-x86_64
+      name: img4.9.25-x86-64-appsub
+  pullSecretRef:
+    name: simon-test-aws-pull-secret
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    cloud: Amazon
+    region: eu-west-1
+    name: 'simon-test-aws'
+    vendor: OpenShift
+  name: 'simon-test-aws'
+spec:
+  hubAcceptsClient: true
+---
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: simon-test-aws-worker
+  namespace: 'simon-test-aws'
+spec:
+  clusterDeploymentRef:
+    name: 'simon-test-aws'
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 100
+        type: io1
+      type: m5.xlarge
+  replicas: 3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: simon-test-aws-pull-secret
+  namespace: 'simon-test-aws'
+stringData:
+  .dockerconfigjson: >-
+    {"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K29jbV9hY2Nlc3NfYzM0MGUyMWQyZWFkNDBlMzhmZDYzMzdhZmMxZWIwMTk6WFU1RVNYUEQyRlhZUDlIQ0pXQ0UzQjEyUzk1MEhIUkNUOE1MUVRRNTVYTTREOU1GU01EUU5LQVRNUUZaRTQwNg==","email":"sdelord@redhat.com"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K29jbV9hY2Nlc3NfYzM0MGUyMWQyZWFkNDBlMzhmZDYzMzdhZmMxZWIwMTk6WFU1RVNYUEQyRlhZUDlIQ0pXQ0UzQjEyUzk1MEhIUkNUOE1MUVRRNTVYTTREOU1GU01EUU5LQVRNUUZaRTQwNg==","email":"sdelord@redhat.com"},"registry.connect.redhat.com":{"auth":"NTM2MTQ5MTF8dWhjLTFmU1Q4SHFqbzJhWTF3VHpVbmgyRFB0TGc1QjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSXlabVl5WTJNeE5qTTNPRGcwTVRaak9ERTJNV1EyWm1WaU9HRmpPVFJrWVNKOS5NSFhKeVlXaDV5c0tmV3JEdkZad1Z3OEdEbW1MUkVaSkNjNFlhUjc0cDR2QVpjcHBfMEI3dnBuY29DVXgyWklIbmdXNV9USlRrN204dGt6ZjM0RHpfRUZURm1sYjc2bXhYMTBKWHdLM2owcEtqcGstUXVZYU5MTFJib3g2OGZlUWNZN0ExOTFoU041UW5CcC0zQms2aWpoRm5NNkNtUHkwY0JEWml3aXU2SUxBcklEMFFEWXpTclVqS1E4a3c0cUtmR0FFeGpBbi1yaUhCNDF3cExpWDduMTFnaklPTDMtS0VSTzFuU2VXVFVTelQzVXZqZFVyMXpjbEtHXzBuUnA4VGYxakdPOHpuak1mRExtMmdQT01mc21Sa1VtYmcwWHJ0akVfSXNJcXpKakZKX0pFaTg1NTZZRGJ2ajRxWXpDTDYyQ2xqV1JZZndGTUJBSTROSTUyMDUzRjZwRzBIUERWVU9BWlhHVkN0NWRTQXhGbjRqM19FaTlJSzAtenVRUWhYMzdwUV8zNmo3R2pnelNRbm4wTUE0RjlSZ1FBMVhMMUIxSWNPcFRDMEFYMW1PSG12WHd4cjkzeTFFQUpkbVNrX1JvUGxvVUJBNXRWWER5RU5yT05TMHRyUmNWcGwwWHpzLXVSTE4yd05uN1J6SENoZHVYTTBpZGVacnFOdmpHb0REalB2X0w5UDRrb003TVhsUW9ZV20tdzZ0TEJ3ZUxuY09nUXRrS2V4NjhwZ2dWcDVFZnY3dVp5a08wVW1UakpHeVBFMGI1NHpxOGlweG40V0N1b3Jvd3F2Q2hQNnhlZ1RwUXFraktTQWl5NmdLMklQMUxBQXVqQUpJemZyVWtWM1EwelNQU2FhdWkzbnNSZHhWNm5iRjBId0FUWGd6RllMUm9jM0FNaXNNdw==","email":"sdelord@redhat.com"},"registry.redhat.io":{"auth":"NTM2MTQ5MTF8dWhjLTFmU1Q4SHFqbzJhWTF3VHpVbmgyRFB0TGc1QjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSXlabVl5WTJNeE5qTTNPRGcwTVRaak9ERTJNV1EyWm1WaU9HRmpPVFJrWVNKOS5NSFhKeVlXaDV5c0tmV3JEdkZad1Z3OEdEbW1MUkVaSkNjNFlhUjc0cDR2QVpjcHBfMEI3dnBuY29DVXgyWklIbmdXNV9USlRrN204dGt6ZjM0RHpfRUZURm1sYjc2bXhYMTBKWHdLM2owcEtqcGstUXVZYU5MTFJib3g2OGZlUWNZN0ExOTFoU041UW5CcC0zQms2aWpoRm5NNkNtUHkwY0JEWml3aXU2SUxBcklEMFFEWXpTclVqS1E4a3c0cUtmR0FFeGpBbi1yaUhCNDF3cExpWDduMTFnaklPTDMtS0VSTzFuU2VXVFVTelQzVXZqZFVyMXpjbEtHXzBuUnA4VGYxakdPOHpuak1mRExtMmdQT01mc21Sa1VtYmcwWHJ0akVfSXNJcXpKakZKX0pFaTg1NTZZRGJ2ajRxWXpDTDYyQ2xqV1JZZndGTUJBSTROSTUyMDUzRjZwRzBIUERWVU9BWlhHVkN0NWRTQXhGbjRqM19FaTlJSzAtenVRUWhYMzdwUV8zNmo3R2pnelNRbm4wTUE0RjlSZ1FBMVhMMUIxSWNPcFRDMEFYMW1PSG12WHd4cjkzeTFFQUpkbVNrX1JvUGxvVUJBNXRWWER5RU5yT05TMHRyUmNWcGwwWHpzLXVSTE4yd05uN1J6SENoZHVYTTBpZGVacnFOdmpHb0REalB2X0w5UDRrb003TVhsUW9ZV20tdzZ0TEJ3ZUxuY09nUXRrS2V4NjhwZ2dWcDVFZnY3dVp5a08wVW1UakpHeVBFMGI1NHpxOGlweG40V0N1b3Jvd3F2Q2hQNnhlZ1RwUXFraktTQWl5NmdLMklQMUxBQXVqQUpJemZyVWtWM1EwelNQU2FhdWkzbnNSZHhWNm5iRjBId0FUWGd6RllMUm9jM0FNaXNNdw==","email":"sdelord@redhat.com"}}}
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: simon-test-aws-install-config
+  namespace: 'simon-test-aws'
+type: Opaque
+data:
+  # Base64 encoding of install-config yaml
+  install-config.yaml: YXBpVmVyc2lvbjogdjEKbWV0YWRhdGE6CiAgbmFtZTogJ3NpbW9uLXRlc3QtYXdzJwpiYXNlRG9tYWluOiBtZWxib3VybmVvcGVuc2hpZnQuY29tCmNvbnRyb2xQbGFuZToKICBoeXBlcnRocmVhZGluZzogRW5hYmxlZAogIG5hbWU6IG1hc3RlcgogIHJlcGxpY2FzOiAzCiAgcGxhdGZvcm06CiAgICBhd3M6CiAgICAgIHJvb3RWb2x1bWU6CiAgICAgICAgaW9wczogNDAwMAogICAgICAgIHNpemU6IDEwMAogICAgICAgIHR5cGU6IGlvMQogICAgICB0eXBlOiBtNS54bGFyZ2UKY29tcHV0ZToKLSBoeXBlcnRocmVhZGluZzogRW5hYmxlZAogIG5hbWU6ICd3b3JrZXInCiAgcmVwbGljYXM6IDMKICBwbGF0Zm9ybToKICAgIGF3czoKICAgICAgcm9vdFZvbHVtZToKICAgICAgICBpb3BzOiAyMDAwCiAgICAgICAgc2l6ZTogMTAwCiAgICAgICAgdHlwZTogaW8xCiAgICAgIHR5cGU6IG01LnhsYXJnZQpuZXR3b3JraW5nOgogIG5ldHdvcmtUeXBlOiBPcGVuU2hpZnRTRE4KICBjbHVzdGVyTmV0d29yazoKICAtIGNpZHI6IDEwLjEyOC4wLjAvMTQKICAgIGhvc3RQcmVmaXg6IDIzCiAgbWFjaGluZU5ldHdvcms6CiAgLSBjaWRyOiAxMC4wLjAuMC8xNgogIHNlcnZpY2VOZXR3b3JrOgogIC0gMTcyLjMwLjAuMC8xNgpwbGF0Zm9ybToKICBhd3M6CiAgICByZWdpb246IGV1LXdlc3QtMQpwdWxsU2VjcmV0OiAiIiAjIHNraXAsIGhpdmUgd2lsbCBpbmplY3QgYmFzZWQgb24gaXQncyBzZWNyZXRzCnNzaEtleTogfC0KICAgIHNzaC1yc2EgQUFBQUIzTnphQzF5YzJFQUFBQURBUUFCQUFBQkFRRFBKeVE0QjRqaUg4amxkRWo0U0VmRXA0T2dKUlpPbVloa1NiLy9QV3NFRlhrU1V1QVlMQ1c5NVNZYkVmS2p0UTFWd2dqZXdzQ245RzczQzVlVmU1ZFZ4L0lJd2wrcmNPNFFyNGVVVXA3dTl4a3QxbFhWcWRQeW5CNmUwVzJHci82WVdqNjJxOEsrSDJQQ0JISEZSZERyazIyZy9ORzVaWkR5dEFacCs1RjRWV1gzTlV6UVAvWitrcmJUWEhQaWliWFY5WVM0K2xyWDRhekNIMFFnR3gvazRDdjl4YTBYMTMrajRZQUZ3NFMwTHB6RE9sRVhPM3c0ako0YUJtNVk5YVQzeitvWm93S0FTWHZHVXl6SWxnQ3VrazlGREhGb3VpRlZ2OFlWdWl0SG5KZnlMaUVhNEYrNjZLT3dmVjR0akhtQm9Xd2cvWDZpalpKYWJkK0dTakNQCg==
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: simon-test-aws-ssh-private-key
+  namespace: 'simon-test-aws'
+stringData:
+  ssh-privatekey: >-
+    MIIEpAIBAAKCAQEAzyckOAeI4h/I5XRI+EhHxKeDoCUWTpmIZEm//z1rBBV5ElLgGCwlveUmGxHyo7UNVcII3sLAp/Ru9wuXlXuXVcfyCMJfq3DuEK+HlFKe7vcZLdZV1anT8pwentFthq/+mFo+tqvCvh9jwgRxxUXQ65NtoPzRuWWQ8rQGafuReFVl9zVM0D/2fpK201xz4om11fWEuPpa1+Gswh9EIBsf5OAr/cWtF9d/o+GABcOEtC6cwzpRFzt8OIyeGgZuWPWk98/qGaMCgEl7xlMsyJYArpJPRQxxaLohVb/GFborR5yX8i4hGuBfuuijsH1eLYx5gaFsIP1+oo2SWm3fhkowjwIDAQABAoIBAFQKcSs6A1KZyossbh4sVNF3lHL4GOCycR8evIH0jOIPRBsm/DtSTc2IlbkNwv6fiVVtbuPQ5xA8nngjf8/pYDAw+gSLtvx6yFqEm+CU1F3maZSrDA+u4onexJ1yIZku9X8hvaemb09qtLIV04JRHL02Bpf1ebBZgEC2wJNmuFG0uNhcLw4rQNozRDMaUtG0Wxq8zLA8J6UULkso5wXwhdml4CX5yWWfp/sYwWn7iLvRGxWhy97k0mvs+nvlfqr4psSpnJYs7c/F2k6SqiV8OpoZ0HGgPDkOtR6Kjo2RTZHmVF1m9fNLEP4cgtv5MeKZi21wRdpJda3f9d1wLb7fLyECgYEA6KhQyo/7RFFYASayRLTxEbG3LodgRQMuOIf1vZAlBeZR7JdlhYBClFrQpmIuEOiaAtlR8FOcBkIx9UzfN70lPsNH1mSCf8Qp1T2bhw7QGd3VZFTUF90sEQVdlYJRlC49CbWJh3sHmYIHMm4TnXSG8VRUAl26ZzlkI3fjLSWmQAsCgYEA4+/BCxsUmhd3zsM1n6M5ixP0As1EDAlZzORSttTAQvOyjHeSkzRwAfGEbLI1uEdYdBsBDP2Ka3DfKVn1i2lAkplHjf2Em5HDCzRc+rlJu56DH3AUKu5kI9QQkaEBV/HIQJiU2rDSTR/BWepe1eg+qqgMVPqwlgLuUTdKYwxw0A0CgYBKRRjtYQMsLu9yBqFX748ZP+sjLlIcFcTWhQh8iBxZgsnaRgZBlM0sQMVkp+jeuvIXQLq4hmhDUzRRg0WqrHXMUFiJZzKFiOB10yHn/mGOMFOjoLTIHXGoyVazmJNkQ1J22/3YQv0NEwYrIhqe5AkD1xCuZK9Rrm96JxZdXixxOwKBgQC1sXsPMEIG5ugg0CjhnMoU3A3pYdh5Q8bqdaKdjQ/JDttn7zTO1MDoO65UuuXphC21N4Vp5n09UdcB7my1+Wt4sGiCffED1XhFaTMoxSRKQ3vARqY85pS6nqOqgk5A3UHEhBw8CzFIOyT0WMfJ+XxiqtxRrRewLJvt74YDWHpgzQKBgQDOUt/vf6e033mfMlHcVqXDcG7W+CNz7HGR4w9ZQ7q0VXx4mQG6JGNUwHloPJOgGg7j4A8WWOGtjeM+WUhIAO24OVAxu+5yyVJJUNsnM9rVMUoy4Sa3KilppPrlHpkqzoOdyr8iP8ZwGGDhcdJPVVvUzBlpiESaX5xrDl9jDn639w==
+
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: simon-test-aws-aws-creds
+  namespace: 'simon-test-aws'
+stringData:
+  aws_access_key_id: put_your_key_here
+  aws_secret_access_key: put_your_key_here
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: 'simon-test-aws'
+  namespace: 'simon-test-aws'
+spec:
+  clusterName: 'simon-test-aws'
+  clusterNamespace: 'simon-test-aws'
+  clusterLabels:
+    cloud: Amazon
+    vendor: OpenShift
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
