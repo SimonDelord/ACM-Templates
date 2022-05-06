@@ -17,7 +17,7 @@ spec:
   auditLogs:
     collection: Auto
   centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
-  clusterName: poop-cluster
+  clusterName: hub-cluster
   perNode:
     collector:
       collection: KernelModule
