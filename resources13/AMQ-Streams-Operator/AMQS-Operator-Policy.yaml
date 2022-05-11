@@ -1,0 +1,97 @@
+# This policy verifies the installation of the official & supported version of
+# the Advanced Cluster Security Operator on the managed clusters.
+#
+# If set to "enforce" it'll install the operator.
+#
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-amq-streams-operator
+  annotations:
+    policy.open-cluster-management.io/standards: ACME-Standards
+    policy.open-cluster-management.io/categories: Operators-Install
+    policy.open-cluster-management.io/controls: AMQS-Operator
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: amq-streams-operator-ns
+        spec:
+          remediationAction: enforce # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: openshift-operators
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: amq-streams-operator-operator-group
+        spec:
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1
+                kind: OperatorGroup
+                metadata:
+                  name: global-operators
+                  namespace: openshift-operators
+                spec:
+#                  targetNamespaces:
+#                    - openshift-operators
+          remediationAction: enforce # will be overridden by remediationAction in parent policy
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: amq-streams-operator-subscription
+        spec:
+          remediationAction: enforce  # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: amq-streams-operator
+                  namespace: openshift-operators
+                spec:
+                  installPlanApproval: Automatic
+                  name: amq-streams
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-amq-streams-operator
+placementRef:
+  name: placement-policy-amq-streams-operator
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-amq-streams-operator
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-amq-streams-operator
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: vendor, operator: In, values: ["OpenShift"]}
