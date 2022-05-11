@@ -88,3 +88,22 @@ Resource 8 contains the various YAML files for the deployment of ClusterAutoscal
 
 Resource 9 contains the YAML files for the deployment of the Operators required in Service Mesh (Elasticsearch, Kiali, Jaeger and ServiceMesh). But this time at the difference of using "Applications" for it, it is being done using Policies. Be careful on the use of OperatorGroup (if it's global scope, just don't include it in the ConfigurationPolicy as you will see it's greyed out). You can then reuse Resources 5 (for the Service Mesh MemberRoll and Control PLane setups) and Resource 4 for the book-info app.
 
+## Resources 10 for deploying GPUs via MachineSets
+### Resources 10
+
+Resource 10 contains the YAML file for the deployment of GPUs to an OCP cluster using MachineSets.
+
+## Resources 11 for creating clusters via ACM using YAML CRDs as opposed to the GUI
+### Resources 11
+
+This is the repo for "creating" clusters via ACM using the work done by J. Packer https://drive.google.com/file/d/1Nj3lSiQ3EPkCxPpqIvF046Qgb8F-ouvh/view is his video https://github.com/jnpacker/cluster-deploy-chart is his Git repo for all of that
+
+## Resources 12 for ACM - ACS Integration
+### Resources 12
+
+To be added
+
+## Resources 13 for ACM - AMQ Streams (Kafka) Integration
+### Resources 13
+
+This is a set of files for deploying the AMQ Streams Operator, creating a Kafka Broker and a Topic.
