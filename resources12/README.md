@@ -16,9 +16,9 @@ Steps currently not covered in the demo:
 - ACS displays the updated compliance statement
 
 
-Photo
-![Browser](https://github.com/SimonDelord/OCP-IPI/blob/main/ALB-Ingress/images/Screen%20Shot%202022-01-13%20at%2012.21.51%20pm.png)
 
+![Browser](https://github.com/SimonDelord/ACM-Templates/resources12/images/ACM-ACS-Integration-photo1.png)
+ACS deployment and configuration by ACM
 
 
 The rest is template
