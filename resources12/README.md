@@ -46,5 +46,16 @@ Finally use applications to deploy the ACS Secured Cluster to all those clusters
 Compliance Operator deployment and configuration by ACM
 
 
+## 4th Step: ACM deploys the compliance operator on all clusters using a policy
 
+This step is simple, it uses a pre-existing ACM policy for Compliance Operator.
+Just go into the Governance section and apply the "compliance operator" policy to all clusters.
+
+## 5th Step: ACM gets the Compliance Operator to run a Scan for E8 and CIS using an application
+
+For this step use the files in the Compliance-Operator-Scan folder
+
+
+## 6: ACS displays the results of the initial Compliance Operator E8 / CIS scan
+Just log into ACS Central and displays the results (may take a few minutes to be displayed). 
 
