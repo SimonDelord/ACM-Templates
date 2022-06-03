@@ -16,6 +16,11 @@ Steps currently not covered in the demo:
 - ACS displays the updated compliance statement
 
 
+Photo
+![Browser](https://github.com/SimonDelord/OCP-IPI/blob/main/ALB-Ingress/images/Screen%20Shot%202022-01-13%20at%2012.21.51%20pm.png)
+
+
+
 The rest is template
 
 This scenario is using an IPI install on AWS to setup a private OCP cluster in an existing VPC.
