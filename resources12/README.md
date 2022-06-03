@@ -1,5 +1,5 @@
 This folder contains an ACM-ACS and compliance integration demo.
-A video of the demonstration is available here - https://youtu.be/s9Ll5PHPT-U
+A video of the demonstration is available [here](https://youtu.be/s9Ll5PHPT-U).
 
 These are the steps for the demo:
 
