@@ -5,11 +5,10 @@ These are the steps for the demo:
 
 - step 1: ACM deploys the ACS operator on all clusters using a policy
 - step 2: ACM deploys ACS Central on the Hub cluster (local-cluster) using an application
-- step 3: ACM deploys ACS Central on the Hub cluster (local-cluster) using an application
-- step 4: ACM deploys ACS Secured on all the clusters using applications
-- step 5: ACM deploys the compliance operator on all clusters using a policy
-- step 6: ACM gets the Compliance Operator to run a Scan for E8 and CIS using an application
-- step 7: ACS displays the results of the initial Compliance Operator E8 / CIS scan
+- step 3: ACM deploys ACS Secured on all the clusters using applications
+- step 4: ACM deploys the compliance operator on all clusters using a policy
+- step 5: ACM gets the Compliance Operator to run a Scan for E8 and CIS using an application
+- step 6: ACS displays the results of the initial Compliance Operator E8 / CIS scan
 
 Steps currently not covered in the demo:
 - ACM now changes the mode of Compliance Operator to "auto-fix"
@@ -21,32 +20,31 @@ Steps currently not covered in the demo:
 ACS deployment and configuration by ACM
 
 
-The rest is template
+## 1st Step: Deploy ACS operator using a policy.
 
-This scenario is using an IPI install on AWS to setup a private OCP cluster in an existing VPC.
-I have used the eu-west-2 region (London) to organise the AWS setup.
+For this step, use the ACS-Operator.yaml file [here](https://github.com/SimonDelord/ACM-Templates/blob/master/resources12/ACS-Operator.yaml).
+You could also enforce the creation of the stackrox namespace on each cluster as part of the policy.
 
-As part of the setup I created the following:
-- one VPC
-- 3 private subnets
-- 3 public subnets
-- 1 Elastic IP address
-- one NAT Gateway
-- 2 route tables associated with the VPC
-- one Internet Gateway
+## 2nd Step: Deploy ACS Central using an application
+
+For this step, you can simply point the Application creation template to the ACS-Central folder in this Git Repo.
+I selected local-cluster for the deployment of Central.
+Once ACS Central has come up and is ready, you will need to generate a secret-bundle that will be imported for all clusters that need to be monitored by ACS. 
+
+## 3rd step: Deploy ACS Secured Cluster using applications
+
+For this step, you first need to deploy the secret-bundle in all the relevant clusters (e.g all) in the stackrox namespace.
+Either create the namespace as part of this step or step 1 via the policy.
+
+Deploy the bundle from the ACS-Init-Bundle folder in this Git Repo. Obviously it's not recommended but used only for the demo.
+Several options are available: sealed secrets, integration into 3rd party systems like Hachicorp Vault, use the Hub cluster for storing those secrets and deploy from the Hub.
+
+Finally use applications to deploy the ACS Secured Cluster to all those clusters. It would be good to have something that automatically generates the right configuration for each cluster rather than having but for the simplicity of the demo I splited those files into different repos.
 
 
-I then generated a install-config.yaml file that can be used as the basis for the OCP cluster creation.
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources12/images/ACM-ACS-Integration-photo2.png)
+Compliance Operator deployment and configuration by ACM
 
-The OCP documentation for this is available https://docs.openshift.com/container-platform/4.8/installing/installing_aws/installing-aws-private.html#installation-custom-aws-vpc-requirements_installing-aws-private
 
-However I struggled with the actual implementation of it (the AWS setup essentially).
 
-These are the steps that need to be taken:
- - associate the internet gateway with the main Route Table in the VPC (rtb-00c310509fc11aafc) and add this internet gateway to a default route. Add the public subnets of the VPC to this route table (subnet association)
- - create the NAT Gateway (you could have up to 3 - e.g one per AZ) into one of the public subnets of the VPC (subnet-02861a246d9c51974 / vpc-ipi-public-a in this example) and associate the elastic IP address. In this example the NAT GW is 	nat-07b4ea1d8abb57d52
- - create a route table for the private subnets of the VPC (rtb-0bea709b735dd6377 in this example), add a default route to this route table and point it to the NAT Gateway created in the previous step (nat-07b4ea1d8abb57d52), associate the 3 private subnets to this route table. You could probably do 3 different private route tables, each one of them associated with a single private-subnet in the VPC and have a dedicated NAT Gateway in the AZ (e.g if you created 3 NAT GWs in the previous step).
- - The installer should now be able to be used as per the install-config.yaml file here
-
-Here are the various screenshots and a diagram of the setup.
 
