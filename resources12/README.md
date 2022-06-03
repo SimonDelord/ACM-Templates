@@ -1,13 +1,19 @@
 This folder contains an ACM-ACS and compliance integration demo.
+A video of the demonstration is available here - https://youtu.be/s9Ll5PHPT-U
 
-1/ ACM deploys ACS operator on all clusters
-1bis/ ACM deploys compliance operator on all clusters
-2/ ACM deploys ACS Central on the Hub cluster (local-cluster)
-3/ ACM deploys ACS Secured on all the clusters 
-4/ ACM now gets Compliance Operator to run a Scan
-5/ ACS displays the results of the initial Compliance Operator E8 / CIS scan
-6/ ACM now changes the mode of Compliance Operator to "auto-fix"
-7/ ACS displays the updated compliance statement
+These are the steps for the demo:
+
+- step 1: ACM deploys the ACS operator on all clusters using a policy
+- step 2: ACM deploys ACS Central on the Hub cluster (local-cluster) using an application
+- step 3: ACM deploys ACS Central on the Hub cluster (local-cluster) using an application
+- step 4: ACM deploys ACS Secured on all the clusters using applications
+- step 5: ACM deploys the compliance operator on all clusters using a policy
+- step 6: ACM gets the Compliance Operator to run a Scan for E8 and CIS using an application
+- step 7: ACS displays the results of the initial Compliance Operator E8 / CIS scan
+
+Steps currently not covered in the demo:
+- ACM now changes the mode of Compliance Operator to "auto-fix"
+- ACS displays the updated compliance statement
 
 
 The rest is template
