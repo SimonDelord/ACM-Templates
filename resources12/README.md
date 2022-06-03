@@ -17,7 +17,7 @@ Steps currently not covered in the demo:
 
 
 
-![Browser](https://github.com/SimonDelord/ACM-Templates/resources12/images/ACM-ACS-Integration-photo1.png)
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources12/images/ACM-ACS-Integration-photo1.png)
 ACS deployment and configuration by ACM
 
 
