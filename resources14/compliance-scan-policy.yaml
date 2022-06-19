@@ -1,0 +1,42 @@
+# This policy assumes that the Compliance Operator is installed and running on
+# the managed clusters. It deploys a scan that will check the master and worker
+# nodes and verifies for compliance with the E8 (Essential 8) security profile.
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-cis-scan
+  annotations:
+    policy.open-cluster-management.io/standards: CIS
+    policy.open-cluster-management.io/categories: CIS
+    policy.open-cluster-management.io/controls: CIS
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-cis-scan
+        spec:
+          remediationAction: inform
+          severity: high
+          object-templates:
+            - complianceType: musthave # this template creates ScanSettingBinding:cis
+              objectDefinition:
+                apiVersion: compliance.openshift.io/v1alpha1
+                kind: ScanSettingBinding
+                metadata:
+                  name: cis-compliance
+                  namespace: openshift-compliance
+                profiles:
+                - apiGroup: compliance.openshift.io/v1alpha1
+                  kind: Profile
+                  name: ocp4-cis-node
+                - apiGroup: compliance.openshift.io/v1alpha1
+                  kind: Profile
+                  name: ocp4-cis
+                settingsRef:
+                  apiGroup: compliance.openshift.io/v1alpha1
+                  kind: ScanSetting
+                  name: default
