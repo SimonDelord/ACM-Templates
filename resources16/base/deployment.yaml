@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: frontend-deployment
+    spec:
+      containers:
+      - name: app
+        image: paulbouwer/hello-kubernetes:1.8
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
