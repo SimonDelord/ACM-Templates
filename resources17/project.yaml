@@ -1,0 +1,16 @@
+kind: Project
+apiVersion: project.openshift.io/v1
+metadata:
+  name: acm-namespace3
+  labels:
+    app: acm-namespace3
+    app.kubernetes.io/part-of: createnamespace
+    apps.open-cluster-management.io/reconcile-rate: medium
+    kubernetes.io/metadata.name: acm-namespace3
+  annotations:
+    apps.open-cluster-management.io/reconcile-option: merge
+spec:
+  finalizers:
+    - kubernetes
+status:
+  phase: Active
