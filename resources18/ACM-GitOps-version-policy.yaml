@@ -1,0 +1,79 @@
+# This policy verifies the installation of the official & supported version of
+# the Advanced Cluster Security Operator on the managed clusters.
+#
+# If set to "enforce" it'll install the operator.
+#
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-gitops-operator-version
+  annotations:
+    policy.open-cluster-management.io/standards: ACME-Standards
+    policy.open-cluster-management.io/categories: Operators-Versioning
+    policy.open-cluster-management.io/controls: GitOps-Operator
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: gitops-operator-ns
+        spec:
+          remediationAction: enforce # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: openshift-gitops
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: gitops-operator-subscription
+        spec:
+          remediationAction: enforce  # will be overridden by remediationAction in parent policy
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: gitops-operator
+                  namespace: openshift-operators
+                spec:
+                  channel: gitops-1.7
+                  installPlanApproval: Automatic
+                  name: openshift-gitops-operator
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-gitops-operator
+placementRef:
+  name: placement-policy-gitops-operator
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-gitops-operator-version
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-gitops-operator
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: vendor, operator: In, values: ["OpenShift"]}
