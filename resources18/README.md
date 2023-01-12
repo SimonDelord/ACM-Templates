@@ -4,3 +4,5 @@ The demo goes like this:
 - deploy the policy (matching on vendor = OpenShift) to check that GitOps should be using channel 1.7
 - show that the policy gives one of the clusters with an error and the other one with compliant
 - enforce the policy and show that the ArgoCD default instance (sitting in openshift-gitops) goes from version 2.4.14 (associated with channel 1.6) to 2.5.4 (to channel 1.7).
+
+A video of this demo is available here - https://www.youtube.com/watch?v=deCnsbBcfZY
