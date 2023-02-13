@@ -16,7 +16,8 @@ spec:
     timeoutSeconds: 3
   auditLogs:
     collection: Auto
-  centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
+#  centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
+  centralEndpoint: 'central-stackrox.apps.qdxz0qat.eastus.aroapp.io:443'
   clusterName: simon-sno
   perNode:
     collector:
