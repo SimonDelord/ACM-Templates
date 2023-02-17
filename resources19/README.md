@@ -8,10 +8,9 @@ The process is the following:
  - import the cluster in ACM (and don't forget to add the observability component obviously).
  
  
- Build  a default EKS cluster
+Build  a default EKS cluster
 Eksctl create cluster –name XXXX –region XXXX
-
-Then, by hand, do a node-group deployment using the IAM shit that the previous command has created.
+This will create all the required infra (VPC, Subnets, etc..) as well as 2 EC2 instances in a node-group.
 
 
 Then deploy the EFS driver
@@ -22,6 +21,12 @@ Eksctl create iamserviceaccount –cluster bendigo-cluster-5 –namespace kube-s
 eksctl create iamserviceaccount --cluster bendigo-cluster-3 --namespace kube-system --name efs-csi-controller-sa --attach-policy-arn arn:aws:iam::146616566043:policy/AmazonEKS_EFS_CSI_Driver_Policy --approve --region ap-southeast-1
 
 Then deploy the efs driver 
+(Taken from https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)
+
+create an IAM policy for EFS CSI Driver
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-efs-csi-driver/master/docs/iam-policy-example.json
+
+aws iam create-policy --policy-name AmazonEKS_EFS_CSI_Driver_Policy --policy-document file://iam-policy-example.json
 
 helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver     --namespace kube-system     --set image.repository=602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/aws-efs-csi-driver     --set controller.serviceAccount.create=false     --set controller.serviceAccount.name=efs-csi-controller-sa
 
