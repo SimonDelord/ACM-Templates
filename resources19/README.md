@@ -18,7 +18,8 @@ This will create all the required infra (VPC, Subnets, etc..) as well as 2 EC2 i
 Then deploy the EFS driver
 
 eksctl utils associate-iam-oidc-provider --region=ap-southeast-1 --cluster=bendigo-cluster-3 --approve
-Eksctl create iamserviceaccount –cluster bendigo-cluster-5 –namespace kube-system –name efs-csi-controller-sa –attach-policy-arn 
+
+eksctl create iamserviceaccount –cluster bendigo-cluster-5 –namespace kube-system –name efs-csi-controller-sa –attach-policy-arn 
 
 eksctl create iamserviceaccount --cluster bendigo-cluster-3 --namespace kube-system --name efs-csi-controller-sa --attach-policy-arn arn:aws:iam::146616566043:policy/AmazonEKS_EFS_CSI_Driver_Policy --approve --region ap-southeast-1
 
@@ -26,6 +27,7 @@ Then deploy the efs driver
 (Taken from https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html)
 
 create an IAM policy for EFS CSI Driver
+
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-efs-csi-driver/master/docs/iam-policy-example.json
 
 aws iam create-policy --policy-name AmazonEKS_EFS_CSI_Driver_Policy --policy-document file://iam-policy-example.json
@@ -35,6 +37,7 @@ helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver     --n
 (the image repository is available at https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html)
 
 Now create an EFS environment for the EKS cluster
+
 https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html (second half of the page - under To create an Amazon EFS file system for your Amazon EKS cluster)
 
 vpc_id=$(aws eks describe-cluster --name bendigo-cluster-5 –region us-west-1 --query "cluster.resourcesVpcConfig.vpcId" --output text)
