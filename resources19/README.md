@@ -9,7 +9,9 @@ The process is the following:
  
  
 Build  a default EKS cluster
+
 Eksctl create cluster –name XXXX –region XXXX
+
 This will create all the required infra (VPC, Subnets, etc..) as well as 2 EC2 instances in a node-group.
 
 
