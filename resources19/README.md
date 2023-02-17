@@ -8,7 +8,7 @@ The process is the following:
  - import the cluster in ACM (and don't forget to add the observability component obviously).
  
  
-Build  a default EKS cluster
+##Build  a default EKS cluster##
 
 Eksctl create cluster –name XXXX –region XXXX
 
