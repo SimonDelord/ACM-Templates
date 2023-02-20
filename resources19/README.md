@@ -52,7 +52,7 @@ kubectl apply -f public-ecr-driver.yaml
 
 https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html (second half of the page - under To create an Amazon EFS file system for your Amazon EKS cluster)
 
-vpc_id=$(aws eks describe-cluster --name bendigo-cluster-5 –region us-west-1 --query "cluster.resourcesVpcConfig.vpcId" --output text)
+vpc_id=$(aws eks describe-cluster --name bendigo-cluster-5 --region us-west-1 --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
 cidr_range=$(aws ec2 describe-vpcs --vpc-ids $vpc_id --query "Vpcs[].CidrBlock" --output text    --region us-west-1)
 
