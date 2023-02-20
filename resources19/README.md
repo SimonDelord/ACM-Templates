@@ -37,6 +37,17 @@ helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver     --n
 
 (the image repository is available at https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html)
 
+if for whatever reason, this doesn't work, you can always do another install using a deployment file
+
+(taken from this https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html - under the install EFS driver section, select Manifest public-registry)
+
+kubectl kustomize     "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.5" > public-ecr-driver.yaml
+
+remove the top service Account from the public-ecr-driver.yaml file.
+
+kubectl apply -f public-ecr-driver.yaml
+
+
 ## Now create an EFS environment for the EKS cluster ##
 
 https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html (second half of the page - under To create an Amazon EFS file system for your Amazon EKS cluster)
