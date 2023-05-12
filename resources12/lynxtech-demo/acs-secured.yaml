@@ -1,0 +1,34 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: SecuredCluster
+metadata:
+  finalizers:
+    - uninstall-helm-release
+  generation: 1
+  name: stackrox-secured-cluster-services
+  namespace: stackrox
+spec:
+  admissionControl:
+    bypass: BreakGlassAnnotation
+    contactImageScanners: DoNotScanInline
+    listenOnCreates: true
+    listenOnEvents: true
+    listenOnUpdates: true
+    timeoutSeconds: 3
+  auditLogs:
+    collection: Auto
+#  centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
+  centralEndpoint: 'central-stackrox.apps.cl2.lynxtech.local:443'
+  clusterName: hub-cluster
+  perNode:
+    collector:
+      collection: KernelModule
+      imageFlavor: Regular
+    taintToleration: TolerateTaints
+  scanner:
+    analyzer:
+      scaling:
+        autoScaling: Enabled
+        maxReplicas: 5
+        minReplicas: 2
+        replicas: 3
+    scannerComponent: AutoSense
