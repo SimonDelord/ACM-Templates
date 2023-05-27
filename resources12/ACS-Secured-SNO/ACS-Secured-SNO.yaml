@@ -29,7 +29,7 @@ spec:
     analyzer:
       scaling:
         autoScaling: Enabled
-        maxReplicas: 5
-        minReplicas: 2
-        replicas: 3
+        maxReplicas: 1
+        minReplicas: 1
+        replicas: 1
     scannerComponent: AutoSense
