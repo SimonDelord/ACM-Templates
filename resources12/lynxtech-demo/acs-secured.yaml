@@ -5,7 +5,7 @@ metadata:
     - uninstall-helm-release
   generation: 1
   name: stackrox-secured-cluster-services
-  namespace: stackrox
+  namespace: rhacs-operator
 spec:
   admissionControl:
     bypass: BreakGlassAnnotation
@@ -17,7 +17,7 @@ spec:
   auditLogs:
     collection: Auto
 #  centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
-  centralEndpoint: 'central-stackrox.apps.cl2.lynxtech.local:443'
+  centralEndpoint: 'central-rhacs-operator.apps.cl2.openshift-demo.lynxtech.com.au:443'
   clusterName: hub-cluster
   perNode:
     collector:
