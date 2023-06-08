@@ -1,0 +1,59 @@
+# This policy that any PoD with the contained=true is tracked.
+#
+#
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-pod-containment
+  annotations:
+    policy.open-cluster-management.io/standards: Configuration-Management
+    policy.open-cluster-management.io/categories: Containment
+    policy.open-cluster-management.io/controls: Block-all-Pods
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-pod-containment
+        spec:
+          remediationAction: enforce  # will be overridden by remediationAction in parent policy
+          severity: high
+          namespaceSelector:
+#            include: ["simon-test"]
+            include: ["*"]
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Pod
+                metadata:
+                  labels:
+                    contained: true
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-pod-containment
+placementRef:
+  name: placement-policy-pod-containment
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-pod-containment
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-pod-containment
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: vendor, operator: In, values: ["OpenShift"]}
