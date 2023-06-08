@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: block-all
+  namespace: simon-test
+spec:
+  podSelector:
+    matchLabels:
+      contained: true
+  policyTypes:
+    - Ingress
+    - Egress
+status: {}
