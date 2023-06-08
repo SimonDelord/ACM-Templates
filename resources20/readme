@@ -1,6 +1,9 @@
 This section is for "containing" a PoD that has been compromised.
 It relies on marking a PoD with a specific label (this could be done manually or via Ansible for example - using the oc client command).
-ACM does two things, 1/ defines a network policy for deny all
-2/ ACM defines a policy that "searches" for such PoD throughout the cluster(s). Based on whether we want this policy to show as "red" or "green" there are 2 options (e.g musthave vs. mustnothave).
+In this example, it relies on the label contained = true
+ACM does two things:
 
-All the files are presented in this git repo
+ - 1/ applies a network policy for deny all to all namespaces (block-all-network-policy.yaml) 
+ - 2/ ACM defines a policy that "searches" for such PoD throughout the cluster(s). Based on whether we want this policy to show as "red" or "green" there are 2 options (e.g musthave vs. mustnothave).
+
+All the files are presented in this git repo.
