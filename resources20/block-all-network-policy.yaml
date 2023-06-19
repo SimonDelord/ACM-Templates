@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      contained: oui
+      contained: 'true'
   policyTypes:
     - Ingress
     - Egress
