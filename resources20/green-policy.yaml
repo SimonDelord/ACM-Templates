@@ -31,7 +31,7 @@ spec:
                 kind: Pod
                 metadata:
                   labels:
-                    contained: true
+                    contained: 'true'
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
