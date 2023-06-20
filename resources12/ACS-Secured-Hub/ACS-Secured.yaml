@@ -17,7 +17,7 @@ spec:
   auditLogs:
     collection: Auto
 #  centralEndpoint: 'central-stackrox.apps.ocpaws.melbourneopenshift.com:443'
-  centralEndpoint: 'central-stackrox.apps.rosa-lwcd4.bwqf.p1.openshiftapps.com:443'
+  centralEndpoint: 'central-stackrox.apps.rosa-lzxql.hbbq.p1.openshiftapps.com:443'
   clusterName: hub-cluster
   perNode:
     collector:
