@@ -103,7 +103,45 @@ This is the repo for "creating" clusters via ACM using the work done by J. Packe
 
 To be added
 
-## Resources 13 for ACM - AMQ Streams (Kafka) Integration
+## Resources 13 GitOps way of deploying AMQ Streams Operator (e.g Kafka), a Broker and a topic
 ### Resources 13
 
 This is a set of files for deploying the AMQ Streams Operator, creating a Kafka Broker and a Topic.
+
+## Resources 14 Compliance Operator CIS Scan
+### Resources 14
+
+Details To be added
+
+
+## Resources 15 not useful
+### Resources 15
+
+To be deleted
+
+## Resources 16 Kustomize Repo for ACM Demo
+### Resources 16
+
+Used as a way of showing Kustomize deployment via ACM
+
+## Resources 17 not useful
+### Resources 17
+
+To be deleted
+
+## Resources 18 ACM Policy to drive Operator versioning
+### Resources 18
+
+These files are used to create a Policy on ACM that checks the GitOps operator against a specific version (channel in that case).
+
+## Resources 19 ACM Observability on EKS clusters
+### Resources 19
+
+This is a demo to show how ACM can be used to enable observability (e.g metrics) on EKS and display everything in ACM.
+
+## Resources 20 Forensic Demo using ACM / ACS / AAP and OCP
+### Resources 20
+
+To be detailed (under work).
+
+
