@@ -10,7 +10,7 @@ metadata:
     policy.open-cluster-management.io/categories: Data Residency
     policy.open-cluster-management.io/controls: Block-all-data-movement
 spec:
-  remediationAction: inform
+  remediationAction: enforce
   disabled: false
   policy-templates:
     - objectDefinition:
