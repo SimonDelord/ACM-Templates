@@ -1,0 +1,28 @@
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicyAutomation
+metadata:
+  name: data-residency-policy-policy-automation
+  namespace: simon-test
+  creationTimestamp: 2023-07-18T07:16:09Z
+  generation: 3
+  ownerReferences:
+    - name: data-residency-policy
+      apiVersion: policy.open-cluster-management.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Policy
+      uid: dc723678-c9a4-427d-b9e0-ea8300097408
+  resourceVersion: "2265689"
+  uid: ee0a5d9c-6114-4819-90b0-9047a9a4b32e
+spec:
+  automationDef:
+    name: simon-test
+    secret: new-acm-aap
+    type: AnsibleJob
+  mode: everyEvent
+  policyRef: data-residency-policy
+status:
+  clustersWithEvent:
+    local-cluster:
+      automationStartTime: 2023-07-18T23:53:02Z
+      eventTime: 2023-07-18T23:53:02Z
