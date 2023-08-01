@@ -20,7 +20,7 @@ spec:
         - containerPort: 8080
 ---
 apiVersion: kubevirt.io/v1
-kind: VirtualMachineInstance
+kind: VirtualMachine
 metadata:
   labels:
     special: vmi-fedora-1
