@@ -43,7 +43,7 @@ spec:
         name: cloudinitdisk
       rng: {}
     machine:
-      type: ""
+      type: pc-q35-rhel8.6.0
     resources:
       requests:
         memory: 1024M 
