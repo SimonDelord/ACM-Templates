@@ -19,47 +19,91 @@ spec:
         ports:
         - containerPort: 8080
 ---
+#apiVersion: kubevirt.io/v1
+#kind: VirtualMachineInstance
+#metadata:
+#  labels:
+#    special: vmi-fedora-1
+#  name: vmi-fedora-1
+#spec:
+#  networks:
+#  - name: default
+#    pod: {}
+#  domain:
+#    devices:
+#      interfaces:
+#        - name: default
+#          masquerade: {}
+#      disks:
+#      - disk:
+#          bus: virtio
+#        name: containerdisk
+#      - disk:
+#          bus: virtio
+#        name: cloudinitdisk
+#      rng: {}
+#    machine:
+#      type: pc-q35-rhel8.6.0
+#    resources:
+#      requests:
+#        memory: 1024M 
+#  terminationGracePeriodSeconds: 0
+#  volumes:
+#  - containerDisk:
+#      image: kubevirt/fedora-cloud-container-disk-demo:v0.21.0
+#    name: containerdisk
+#  - cloudInitNoCloud:
+#      userData: |
+#        #cloud-config
+#        hostname: fedora-0
+#        password: fedora
+#        chpasswd: { expire: False }
+#        ssh_pwauth: True
+#        disable_root: false
+#        ssh_authorized_keys:
+#          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsYL8SnJf3blzXmsqJrdyz8RF88W+k9tv/5muoL9ieUGpI67cCKbzCInfKRiuMaDd51D8f+ezZzwx6x/sSbhaDIA90cPBCJIVXY3sVLTSIYK+EzfzDdgYBdpphsRCapwK++5Yev68NT/02BJRbqXhNrYcE4bj2GEQX6Tq8n3LqOYg3j5TvmCBvxut7qztn16rNHFBFF2K/AEavzkyFrzaddFAdVzmV79zBAhCYwoRWhXffMr0NxihxdbglT7qNRtJbOlvBgbYinn2rSsXrSF+1TdCHk3Uo+H5q2sfSDtMQCN32Oh+bCG/zxwL8p2hbdC6AKIk3LzICTqFa+gRCvOWR 
+#    name: cloudinitdisk
+
+
 apiVersion: kubevirt.io/v1
-kind: VirtualMachineInstance
+kind: VirtualMachine
 metadata:
-  labels:
-    special: vmi-fedora-1
-  name: vmi-fedora-1
+  name: fedora-vmi
 spec:
-  networks:
-  - name: default
-    pod: {}
-  domain:
-    devices:
-      interfaces:
-        - name: default
-          masquerade: {}
-      disks:
-      - disk:
-          bus: virtio
-        name: containerdisk
-      - disk:
-          bus: virtio
-        name: cloudinitdisk
-      rng: {}
-    machine:
-      type: pc-q35-rhel8.6.0
-    resources:
-      requests:
-        memory: 1024M 
-  terminationGracePeriodSeconds: 0
-  volumes:
-  - containerDisk:
-      image: kubevirt/fedora-cloud-container-disk-demo:v0.21.0
-    name: containerdisk
-  - cloudInitNoCloud:
-      userData: |
-        #cloud-config
-        hostname: fedora-0
-        password: fedora
-        chpasswd: { expire: False }
-        ssh_pwauth: True
-        disable_root: false
-        ssh_authorized_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsYL8SnJf3blzXmsqJrdyz8RF88W+k9tv/5muoL9ieUGpI67cCKbzCInfKRiuMaDd51D8f+ezZzwx6x/sSbhaDIA90cPBCJIVXY3sVLTSIYK+EzfzDdgYBdpphsRCapwK++5Yev68NT/02BJRbqXhNrYcE4bj2GEQX6Tq8n3LqOYg3j5TvmCBvxut7qztn16rNHFBFF2K/AEavzkyFrzaddFAdVzmV79zBAhCYwoRWhXffMr0NxihxdbglT7qNRtJbOlvBgbYinn2rSsXrSF+1TdCHk3Uo+H5q2sfSDtMQCN32Oh+bCG/zxwL8p2hbdC6AKIk3LzICTqFa+gRCvOWR 
-    name: cloudinitdisk
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/size: small
+        kubevirt.io/domain: fedora-vmi
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: containerdisk
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+          - name: default
+            masquerade: {}
+        resources:
+          requests:
+            memory: 1Gi
+          limits:
+            memory: 2Gi
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+        - name: containerdisk
+          containerDisk:
+            image: kubevirt/fedora-cloud-container-disk-demo:latest
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              password: fedora
+              chpasswd: { expire: False }
