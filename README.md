@@ -144,4 +144,19 @@ This is a demo to show how ACM can be used to enable observability (e.g metrics)
 
 To be detailed (under work).
 
+## Resources 21 Trial for the forensic demo
+### Resources 21
+Just a test setup.
 
+
+## Resources 22 Another trial for the forensic work
+### Resources 22
+
+To be detailed (under work).
+
+## Resources 23 Demo for ANZ Bank
+### Resources 23
+
+This is the setup for the ANZ Bank Tech talk (30-08-2023).
+This setup covers the progressive migration of a 3 tier app (DB / Backend / Frontend) using submariner
+and also the data-locality policies avoiding the backend to be deployed onto specific clusters.
