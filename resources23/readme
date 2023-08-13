@@ -1,9 +1,9 @@
 OK,
 the  setup for the demo goes as per follows:
-  - create 2 OCP clusters
-  - deploy Submariner between these two clusters
-  - deploy AAP on one cluster
-  - create credentials on ACM to talk to AAP using an AAP token.
+- create 2 OCP clusters
+- deploy Submariner between these two clusters
+- deploy AAP on one cluster
+- create credentials on ACM to talk to AAP using an AAP token.
 
 Next step is the first part of the demo:
   - deploy the sample app (located in the sample-app folder) on one cluster. This app contains 3 tiers, a DB, a Backend and a frontend.
