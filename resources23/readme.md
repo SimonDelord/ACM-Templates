@@ -1,24 +1,37 @@
 OK,
 the  setup for the demo goes as per follows:
+
 - create 2 OCP clusters
 - deploy Submariner between these two clusters
 - deploy AAP on one cluster
 - create credentials on ACM to talk to AAP using an AAP token.
 
 Next step is the first part of the demo:
-  - deploy the sample app (located in the sample-app folder) on one cluster. This app contains 3 tiers, a DB, a Backend and a frontend.
-  - export the backend service via submariner
-  - move the frontend to the second cluster
-  - check connectivity
+- deploy the sample app (located in the sample-app folder) on one cluster. This app contains 3 tiers, a DB, a Backend and a frontend.
+- export the backend service via submariner
+- move the frontend to the second cluster
+- check connectivity
 
 Next step is the second part of the demo:
-  - create the data-locality policy on ACM
-  - create on AAP the project and templates associated with the policy violation
-  - add the AAP template to the ACM policy
-  - try and deploy the backend service to the second cluster
+- create the data-locality policy on ACM
+- create on AAP the project and templates associated with the policy violation
+- add the AAP template to the ACM policy
+- try and deploy the backend service to the second cluster
 
 
+## 1st Step: Prepare the environment
 
+All steps for the preparation of the environment are in the preparation folder.
+
+### deploy submariner between the two clusters
+
+Assuming both clusters have been deployed on AWS, it is just a matter of going through the clusterset setup and enabling GlobalNet as part of the deployment.
+
+
+### deploy AAP on the local cluster
+
+The AAP deployment can be done by hand by selecting the operator and then creating an instance, or another way is to define a policy for it.
+The policy file 
 1st part of the demo is to deploy
 2 clusters 
 Deploy Bryon’s app (https://github.com/bryonbaker/jboss-breakdown-monolith)
