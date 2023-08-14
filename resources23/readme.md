@@ -55,6 +55,27 @@ And once you've created the project, sync it up. Then create a template as per t
 
 Do not forget to tick the "click on launch" box as part of the template, otherwise the ACM to AAP integration will not work.
 
+The next step is to create an application and a Token in AAP.
+
+In the AAP Admin Tab, go to Applications and create something similar to the following screenshot (for the redirect URL I simply put in there the URL of the AAP Controller Instance which I don't think is correct, but anyway, it works).
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Applications-Setup.png)
+
+
+Then go to the Access -> Users Tab and click on the Admin user and go to Token and create a token as per the following screenshot.
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Token-Setup.png)
+
+
+You are now ready to configure the credentials in ACM for this.
+
+
+
+
+
+
+
+
 
 1st part of the demo is to deploy
 2 clusters 
