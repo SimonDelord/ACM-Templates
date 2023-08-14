@@ -45,10 +45,15 @@ If you're doing a default install, the admin password for AAP is within the aape
 Log onto AAP and provide your credentials to get the relevant SKU.
 
 Next create a Project to sync up your Ansible-playbooks as per the following
+
 ![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Project-Setup.png)
 
+
 And once you've created the project, sync it up. Then create a template as per the following
+
 ![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Template-Setup.png)
+
+Do not forget to tick the "click on launch" box as part of the template, otherwise the ACM to AAP integration will not work.
 
 
 1st part of the demo is to deploy
