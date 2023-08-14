@@ -31,7 +31,22 @@ Assuming both clusters have been deployed on AWS, it is just a matter of going t
 ### deploy AAP on the local cluster
 
 The AAP deployment can be done by hand by selecting the operator and then creating an instance, or another way is to define a policy for it.
-The policy file 
+The policy and the Controller Instance files are available under the preparation folder.
+
+Simply type
+oc apply -f AAP-Operator-Policy.yaml (this will create a policy that creates the aap namespace and deploys the AAP operator on the cluster).
+oc apply -f Automation-Controller-Instance.yaml (this could be driven by an application from ACM).
+
+### Create credentials on ACM to talk to AAP using an AAP token
+
+Post AAP Controller install on the OCP cluster, there are a set of steps to follow.
+If you're doing a default install, the admin password for AAP is within the aapexample-admin-password secret.
+
+Log onto AAP and provide your credentials to get the relevant SKU.
+
+Next create a Project to sync up your Ansible-playbooks.
+
+
 1st part of the demo is to deploy
 2 clusters 
 Deploy Bryon’s app (https://github.com/bryonbaker/jboss-breakdown-monolith)
