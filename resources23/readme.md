@@ -77,6 +77,12 @@ Then provide the AAP url and the token provided as part of the previous step.
 ![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Ansible-Credentials.png)
 
 
+### Create the Data Locality Policy
+
+You can now deploy the data-locality Policy.
+This policy is available under the preparation folder. 
+
+
 ### Link ACM to AAP for the Policy
 
 Now, the interesting part.
