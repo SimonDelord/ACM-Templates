@@ -79,6 +79,21 @@ Then provide the AAP url and the token provided as part of the previous step.
 
 ### Link ACM to AAP for the Policy
 
+Now, the interesting part.
+
+Go to the ACM console and go through the Governance tab.
+Click on the policy that you want to link to AAP and click on the Automation - Configure line.
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Automation-Configure.png)
+
+
+You should then see a "Create Policy Automation" window open. 
+Go through the fields and select:
+- the Ansible Credentials you created in the previous step
+- the Ansible Playbook you want to run (this is a good way of seeing if ACM can connect to AAP as if you don't see anything, it means ACM isn't able to retrieve the templates available on AAP).
+- the various scheduling characteristics (how many violations, any delay, etc..)
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Automation-Policy.png)
 
 
 
