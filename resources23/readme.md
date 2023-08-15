@@ -34,8 +34,8 @@ The AAP deployment can be done by hand by selecting the operator and then creati
 The policy and the Controller Instance files are available under the preparation folder.
 
 Simply type
-oc apply -f AAP-Operator-Policy.yaml (this will create a policy that creates the aap namespace and deploys the AAP operator on the cluster).
-oc apply -f Automation-Controller-Instance.yaml (this could be driven by an application from ACM).
+- oc apply -f AAP-Operator-Policy.yaml (this will create a policy that creates the aap namespace and deploys the AAP operator on the cluster).
+- oc apply -f Automation-Controller-Instance.yaml (this could be driven by an application from ACM).
 
 ### Create credentials on ACM to talk to AAP using an AAP token
 
@@ -69,9 +69,15 @@ Then go to the Access -> Users Tab and click on the Admin user and go to Token a
 
 You are now ready to configure the credentials in ACM for this.
 
+Within the ACM Console, click on Credentials -> Add credentials -> Red Hat Ansible Automation Platform
+
+Then give a name to the credential and the namespace in which it's kept.
+Then provide the AAP url and the token provided as part of the previous step.
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/ACM-AAP-Ansible-Credentials.png)
 
 
-
+### Link ACM to AAP for the Policy
 
 
 
