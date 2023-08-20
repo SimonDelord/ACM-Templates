@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: quay.io/bfarr/jboss-demo-frontend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: BACKEND_PROVIDER_URL
+          value: remote+http://backend:8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: frontend
+spec:
+  to:
+    kind: Service
+    name: frontend
+    weight: 100
+# Commented out because OCP Local does not like the TLS termination. Live with the warning for the demonstration. - To test with insecure term policy
+#  tls:
+#    termination: edge
+#    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: 8080
+  wildcardPolicy: None
