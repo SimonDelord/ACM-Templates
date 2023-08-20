@@ -103,6 +103,21 @@ Go through the fields and select:
 
 
 
+## First part of the demo ##
+
+Now that we have both clusters connected via Submariner and ACM and AAP connected together, we are going to deploy a sample app.
+
+Create a new project called app-modernisation
+
+- oc new-project app-modernisation
+- deploy the database (located in the sample-app folder)
+- deploy the backend (located in the sample-app folder)
+- deploy the frontend (located in the sample-app folder).
+
+Success should look like the following with 3 PoDs running in the project/namespace and you being able to see the app and enter some details (like your name and email, etc...).
+
+![Browser](https://github.com/SimonDelord/ACM-Templates/blob/master/resources23/images/Sample-app.png)
+
 
 1st part of the demo is to deploy
 2 clusters 
@@ -139,3 +154,4 @@ And then the frontend is able to go and retrieve the previous configured app.
 —--2nd part of the demo—----
 Deploy ansible operator
 Create ansible instance
+Make sure the Ansible playbook runs using the credentials....
