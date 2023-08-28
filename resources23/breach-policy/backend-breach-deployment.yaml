@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+    data: critical
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+        data: critical
+    spec:
+      containers:
+      - name: backend
+        image: quay.io/bfarr/jboss-demo-backend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: POSTGRES_SERVICE_HOST
+          value: db
+        - name: POSTGRES_USER
+          value: demo
+        - name: POSTGRES_PASSWORD
+          value: mypassword123
+        - name: POSTGRES_DB
+          value: demo-db
