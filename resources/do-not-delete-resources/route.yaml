@@ -1,0 +1,25 @@
+# route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    apps.open-cluster-management.io/do-not-delete: 'true'
+    openshift.io/host.generated: "true"
+    argocd.argoproj.io/sync-wave: "1"
+  creationTimestamp: null
+  labels:
+    app: hello-simon
+    app.kubernetes.io/instance: hello-simon    
+  name: hello-simon
+spec:  
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: hello-simon
+    weight: 100
+status:
+  ingress:
+    - conditions:
+        - status: 'True'
+          type: Admitted
