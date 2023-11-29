@@ -1,0 +1,156 @@
+# This is a StackRox cluster init bundle.
+# This bundle can be used for setting up any number of StackRox secured clusters.
+# NOTE: This file contains secret data and needs to be handled and stored accordingly.
+#
+#   name:      "init-bundle-17-11-23"
+#   createdAt: 2023-11-17T00:36:04.125732052Z
+#   expiresAt: 2024-11-16T00:36:00Z
+#   id:        d4b0c084-4399-4d1d-b16b-3e83e8b3329f
+#
+
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    init-bundle.stackrox.io/created-at: "2023-11-17T00:36:04.125732052Z"
+    init-bundle.stackrox.io/expires-at: "2024-11-16T00:36:00Z"
+    init-bundle.stackrox.io/id: d4b0c084-4399-4d1d-b16b-3e83e8b3329f
+    init-bundle.stackrox.io/name: init-bundle-17-11-23
+  creationTimestamp: null
+  name: collector-tls
+stringData:
+  ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIB1TCCAXqgAwIBAgIUAycsaCGa1JNb+hjPwDyaOYMsUKswCgYIKoZIzj0EAwIw
+    SDEnMCUGA1UEAxMeU3RhY2tSb3ggQ2VydGlmaWNhdGUgQXV0aG9yaXR5MR0wGwYD
+    VQQFExQxMTc5MzAyNTk3NTY5MDk2MTM3MjAeFw0yMzExMTcwMDEzMDBaFw0yODEx
+    MTUwMDEzMDBaMEgxJzAlBgNVBAMTHlN0YWNrUm94IENlcnRpZmljYXRlIEF1dGhv
+    cml0eTEdMBsGA1UEBRMUMTE3OTMwMjU5NzU2OTA5NjEzNzIwWTATBgcqhkjOPQIB
+    BggqhkjOPQMBBwNCAAR4URBPoY624UdEDDlNLJcPVPG0mrkxC1nwoXzCWfJ21ZVM
+    fSiBkI4Ek2HdyJrFwsyoltdlU6lAGNF1Y3D8ZzG+o0IwQDAOBgNVHQ8BAf8EBAMC
+    AQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUFM3a0tXGb/pb6gKbrZV6VAfS
+    nCUwCgYIKoZIzj0EAwIDSQAwRgIhAOktzfq6Om/iMQnvRfpFGd8XEZgguHmmDUJW
+    pceZInieAiEAtLoSxUk/R/rOru7E6FGzIfpa+pI4DPkhGEsRQ3q541E=
+    -----END CERTIFICATE-----
+  collector-cert.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIICpDCCAkqgAwIBAgIJALmbxkSNN354MAoGCCqGSM49BAMCMEgxJzAlBgNVBAMT
+    HlN0YWNrUm94IENlcnRpZmljYXRlIEF1dGhvcml0eTEdMBsGA1UEBRMUMTE3OTMw
+    MjU5NzU2OTA5NjEzNzIwHhcNMjMxMTE2MjMzNjAwWhcNMjQxMTE2MDAzNjAwWjCB
+    rDEtMCsGA1UEChMkZDRiMGMwODQtNDM5OS00ZDFkLWIxNmItM2U4M2U4YjMzMjlm
+    MRowGAYDVQQLDBFDT0xMRUNUT1JfU0VSVklDRTFAMD4GA1UEAww3Q09MTEVDVE9S
+    X1NFUlZJQ0U6IDAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMDEd
+    MBsGA1UEBRMUMTMzNzQ1MDE1MTYxMzYxMTk5MjgwWTATBgcqhkjOPQIBBggqhkjO
+    PQMBBwNCAASyMCTj/8N/4nH3U9SxLeUl70mmeDIUrpF5KlN5Fbeo27U4BiRyuKzJ
+    fr0TI0Oo79m/fBiPqzMzvsCz/5g4hKAfo4G3MIG0MA4GA1UdDwEB/wQEAwIFoDAd
+    BgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNV
+    HQ4EFgQUoZyHJ4BmA5PGUgHBSyAfb7y0DTQwHwYDVR0jBBgwFoAUFM3a0tXGb/pb
+    6gKbrZV6VAfSnCUwNQYDVR0RBC4wLIISY29sbGVjdG9yLnN0YWNrcm94ghZjb2xs
+    ZWN0b3Iuc3RhY2tyb3guc3ZjMAoGCCqGSM49BAMCA0gAMEUCIQCqyOHUzvkhX4LE
+    q1BzdSyzuP/9J2oV9oNIz84OwmklYgIgf6HxzfqFEXu0pHGeqss1T6WSoaCScuJd
+    rAqJ4rz+qT4=
+    -----END CERTIFICATE-----
+  collector-key.pem: |
+    -----BEGIN EC PRIVATE KEY-----
+    MHcCAQEEIClGz38AKIKusWJhxwQYQ9HpdU85YpUQ4AgWLFcX7YOeoAoGCCqGSM49
+    AwEHoUQDQgAEsjAk4//Df+Jx91PUsS3lJe9JpngyFK6ReSpTeRW3qNu1OAYkcris
+    yX69EyNDqO/Zv3wYj6szM77As/+YOISgHw==
+    -----END EC PRIVATE KEY-----
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    init-bundle.stackrox.io/created-at: "2023-11-17T00:36:04.125732052Z"
+    init-bundle.stackrox.io/expires-at: "2024-11-16T00:36:00Z"
+    init-bundle.stackrox.io/id: d4b0c084-4399-4d1d-b16b-3e83e8b3329f
+    init-bundle.stackrox.io/name: init-bundle-17-11-23
+  creationTimestamp: null
+  name: sensor-tls
+stringData:
+  ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIB1TCCAXqgAwIBAgIUAycsaCGa1JNb+hjPwDyaOYMsUKswCgYIKoZIzj0EAwIw
+    SDEnMCUGA1UEAxMeU3RhY2tSb3ggQ2VydGlmaWNhdGUgQXV0aG9yaXR5MR0wGwYD
+    VQQFExQxMTc5MzAyNTk3NTY5MDk2MTM3MjAeFw0yMzExMTcwMDEzMDBaFw0yODEx
+    MTUwMDEzMDBaMEgxJzAlBgNVBAMTHlN0YWNrUm94IENlcnRpZmljYXRlIEF1dGhv
+    cml0eTEdMBsGA1UEBRMUMTE3OTMwMjU5NzU2OTA5NjEzNzIwWTATBgcqhkjOPQIB
+    BggqhkjOPQMBBwNCAAR4URBPoY624UdEDDlNLJcPVPG0mrkxC1nwoXzCWfJ21ZVM
+    fSiBkI4Ek2HdyJrFwsyoltdlU6lAGNF1Y3D8ZzG+o0IwQDAOBgNVHQ8BAf8EBAMC
+    AQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUFM3a0tXGb/pb6gKbrZV6VAfS
+    nCUwCgYIKoZIzj0EAwIDSQAwRgIhAOktzfq6Om/iMQnvRfpFGd8XEZgguHmmDUJW
+    pceZInieAiEAtLoSxUk/R/rOru7E6FGzIfpa+pI4DPkhGEsRQ3q541E=
+    -----END CERTIFICATE-----
+  sensor-cert.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIICszCCAlmgAwIBAgIILoTdmI3NE6EwCgYIKoZIzj0EAwIwSDEnMCUGA1UEAxMe
+    U3RhY2tSb3ggQ2VydGlmaWNhdGUgQXV0aG9yaXR5MR0wGwYDVQQFExQxMTc5MzAy
+    NTk3NTY5MDk2MTM3MjAeFw0yMzExMTYyMzM2MDBaFw0yNDExMTYwMDM2MDBaMIGl
+    MS0wKwYDVQQKEyRkNGIwYzA4NC00Mzk5LTRkMWQtYjE2Yi0zZTgzZThiMzMyOWYx
+    FzAVBgNVBAsMDlNFTlNPUl9TRVJWSUNFMT0wOwYDVQQDDDRTRU5TT1JfU0VSVklD
+    RTogMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwMRwwGgYDVQQF
+    ExMzMzUyMDQ3NjY5OTU0Mjg2NDk3MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE
+    E4m+iAngWvcxw2r3UzCVdS98YQZqNFk+0+HjGvFvURW9H83RhCRSlhD3iYySYa8i
+    HHJpsQtBJykiw94Xc+bVXqOBzjCByzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYw
+    FAYIKwYBBQUHAwEGCCsGAQUFBwMCMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFOkZ
+    90UdBzyq8lel8V50hlbUMFtjMB8GA1UdIwQYMBaAFBTN2tLVxm/6W+oCm62VelQH
+    0pwlMEwGA1UdEQRFMEOCD3NlbnNvci5zdGFja3JveIITc2Vuc29yLnN0YWNrcm94
+    LnN2Y4Ibc2Vuc29yLXdlYmhvb2suc3RhY2tyb3guc3ZjMAoGCCqGSM49BAMCA0gA
+    MEUCIEhhTvj0D3jfZbGhEm3ThVc0FaqGrJ0y9Me4gYRTyoZLAiEA1WP09V/O81Yb
+    qG/J7/OZiizj+IH6HO8dLd9lUzDFVkY=
+    -----END CERTIFICATE-----
+  sensor-key.pem: |
+    -----BEGIN EC PRIVATE KEY-----
+    MHcCAQEEIM9D+tmeVGbuUvhHt1pcmaopuG5Vh6jLDy5fzAFFEdDioAoGCCqGSM49
+    AwEHoUQDQgAEE4m+iAngWvcxw2r3UzCVdS98YQZqNFk+0+HjGvFvURW9H83RhCRS
+    lhD3iYySYa8iHHJpsQtBJykiw94Xc+bVXg==
+    -----END EC PRIVATE KEY-----
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    init-bundle.stackrox.io/created-at: "2023-11-17T00:36:04.125732052Z"
+    init-bundle.stackrox.io/expires-at: "2024-11-16T00:36:00Z"
+    init-bundle.stackrox.io/id: d4b0c084-4399-4d1d-b16b-3e83e8b3329f
+    init-bundle.stackrox.io/name: init-bundle-17-11-23
+  creationTimestamp: null
+  name: admission-control-tls
+stringData:
+  admission-control-cert.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIICwjCCAmmgAwIBAgIJAIg2lI7Mh0o1MAoGCCqGSM49BAMCMEgxJzAlBgNVBAMT
+    HlN0YWNrUm94IENlcnRpZmljYXRlIEF1dGhvcml0eTEdMBsGA1UEBRMUMTE3OTMw
+    MjU5NzU2OTA5NjEzNzIwHhcNMjMxMTE2MjMzNjAwWhcNMjQxMTE2MDAzNjAwWjCB
+    uzEtMCsGA1UEChMkZDRiMGMwODQtNDM5OS00ZDFkLWIxNmItM2U4M2U4YjMzMjlm
+    MSIwIAYDVQQLDBlBRE1JU1NJT05fQ09OVFJPTF9TRVJWSUNFMUgwRgYDVQQDDD9B
+    RE1JU1NJT05fQ09OVFJPTF9TRVJWSUNFOiAwMDAwMDAwMC0wMDAwLTAwMDAtMDAw
+    MC0wMDAwMDAwMDAwMDAxHDAaBgNVBAUTEzk4MTUxOTU3Nzg5MzgyNjAwMjEwWTAT
+    BgcqhkjOPQIBBggqhkjOPQMBBwNCAAShBhjUXTVhwP7ZOXejDooQV0Ff0lcznZ1L
+    VZDGCXLVMbM00WKhMTtIYJNtv3+GL13ywDaUMqz4wHpPWPv90TA7o4HHMIHEMA4G
+    A1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYD
+    VR0TAQH/BAIwADAdBgNVHQ4EFgQUXXNZZZAXDtQKhUvn7a62wrSqBPIwHwYDVR0j
+    BBgwFoAUFM3a0tXGb/pb6gKbrZV6VAfSnCUwRQYDVR0RBD4wPIIaYWRtaXNzaW9u
+    LWNvbnRyb2wuc3RhY2tyb3iCHmFkbWlzc2lvbi1jb250cm9sLnN0YWNrcm94LnN2
+    YzAKBggqhkjOPQQDAgNHADBEAiBhnhjxAbfuNvPlCrsdEclr9luRcXtosHgas7AV
+    YvNHmQIgJtfmMrkQ+7OnO125gCRiq7kT6FNLsSv52gMpqnUTA40=
+    -----END CERTIFICATE-----
+  admission-control-key.pem: |
+    -----BEGIN EC PRIVATE KEY-----
+    MHcCAQEEIEiqzt/4Vwq1P7EbhHK6Qk4ljuhQnYSM7QGmS+o1/tp/oAoGCCqGSM49
+    AwEHoUQDQgAEoQYY1F01YcD+2Tl3ow6KEFdBX9JXM52dS1WQxgly1TGzNNFioTE7
+    SGCTbb9/hi9d8sA2lDKs+MB6T1j7/dEwOw==
+    -----END EC PRIVATE KEY-----
+  ca.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIB1TCCAXqgAwIBAgIUAycsaCGa1JNb+hjPwDyaOYMsUKswCgYIKoZIzj0EAwIw
+    SDEnMCUGA1UEAxMeU3RhY2tSb3ggQ2VydGlmaWNhdGUgQXV0aG9yaXR5MR0wGwYD
+    VQQFExQxMTc5MzAyNTk3NTY5MDk2MTM3MjAeFw0yMzExMTcwMDEzMDBaFw0yODEx
+    MTUwMDEzMDBaMEgxJzAlBgNVBAMTHlN0YWNrUm94IENlcnRpZmljYXRlIEF1dGhv
+    cml0eTEdMBsGA1UEBRMUMTE3OTMwMjU5NzU2OTA5NjEzNzIwWTATBgcqhkjOPQIB
+    BggqhkjOPQMBBwNCAAR4URBPoY624UdEDDlNLJcPVPG0mrkxC1nwoXzCWfJ21ZVM
+    fSiBkI4Ek2HdyJrFwsyoltdlU6lAGNF1Y3D8ZzG+o0IwQDAOBgNVHQ8BAf8EBAMC
+    AQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUFM3a0tXGb/pb6gKbrZV6VAfS
+    nCUwCgYIKoZIzj0EAwIDSQAwRgIhAOktzfq6Om/iMQnvRfpFGd8XEZgguHmmDUJW
+    pceZInieAiEAtLoSxUk/R/rOru7E6FGzIfpa+pI4DPkhGEsRQ3q541E=
+    -----END CERTIFICATE-----
