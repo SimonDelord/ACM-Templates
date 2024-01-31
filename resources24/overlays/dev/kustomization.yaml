@@ -7,5 +7,5 @@ patchesJson6902:
 - target:
     version: v1
     kind: Ibmcpd
-    name: ibmcpd
+    name: ibmcpd-base
   path: ibmcpd_patch.json
