@@ -4,3 +4,6 @@ IT does the following:
   - defines a policy to install the IBM CloudPak for Data in the ibm-cp4s-data namespace (you may have to create the namespace beforehand as well as the configMap namespace-scope) - both namespace and configMap can be included as part of the policy
   - uses Kustomize as a way of deploying a dev instance on the cluster with the label environment=dev
 
+
+For whatever reason, the kustomize approach didn't like the so I used the patchesJson6902 instead of the patchesStrategicMerge.
+Food for thought.
