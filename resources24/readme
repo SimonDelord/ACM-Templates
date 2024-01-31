@@ -1,0 +1,6 @@
+This is the repo to install an IBM CloudPak (the data cloudpak in this example) using ACM.
+IT does the following:
+  - defines a policy to install the IBM-Operator-Catalog (using the label - cloudpak=ibm)
+  - defines a policy to install the IBM CloudPak for Data in the ibm-cp4s-data namespace (you may have to create the namespace beforehand as well as the configMap namespace-scope) - both namespace and configMap can be included as part of the policy
+  - uses Kustomize as a way of deploying a dev instance on the cluster with the label environment=dev
+
