@@ -6,5 +6,5 @@ metadata:
 spec:
   license:
     accept: false
-    license: Entreprise
+    license: Enterprise
   storageClass: managed-nfs-storage
