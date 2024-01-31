@@ -2,10 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ../../base
-
 patchesJson6902:
 - target:
     version: v1
     kind: Ibmcpd
     name: ibmcpd-base
-  path: ibmcpd_patch.yaml
+path: ibmcpd_patch.yaml
