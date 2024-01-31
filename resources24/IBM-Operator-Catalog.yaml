@@ -1,0 +1,66 @@
+# This policy verifies the installation of the official & supported version of
+# the IBM Operators Catalog.
+#
+#
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-ibm-operator-catalog
+  annotations:
+    policy.open-cluster-management.io/standards: ACME-Standards
+    policy.open-cluster-management.io/categories: Operators-Install
+    policy.open-cluster-management.io/controls: IBM-OLM-Operator
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-ibm-operator-catalog
+        spec:
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: CatalogSource
+                metadata:
+                  name: ibm-operator-catalog
+                  namespace: openshift-marketplace
+                spec:
+                  displayName: ibm-operator-catalog
+                  publisher: IBM Content
+                  sourceType: grpc
+                  image: icr.io/cpopen/ibm-operator-catalog
+                  updateStrategy:
+                      registryPoll:
+                          interval: 45m
+          remediationAction: enforce # will be overridden by remediationAction in parent policy
+
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-ibm-operator-catalog
+placementRef:
+  name: placement-policy-ibm-operator-catalog
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-ibm-operator-catalog
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-ibm-operator-catalog
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: cloudpak, operator: In, values: ["ibm"]}
