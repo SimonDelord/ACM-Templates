@@ -3,4 +3,4 @@ kind: Kustomization
 bases:
 - ../../base
 patchesStrategicMerge:
-- ibmcpmd.yaml
+- ibmcpd.yaml
