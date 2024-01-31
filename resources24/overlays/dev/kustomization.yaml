@@ -7,4 +7,4 @@ patchesJson6902:
     version: v1
     kind: Ibmcpd
     name: ibmcpd-base
-path: ibmcpd_patch.yaml
+path: ibmcpd_patch.json
