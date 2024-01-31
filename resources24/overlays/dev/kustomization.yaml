@@ -4,4 +4,4 @@ bases:
 - ../../empty
 #patchesStrategicMerge:
 resources:
-- ibmcpd-new.yaml
+  - ibmcpd-new.yaml
