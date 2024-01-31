@@ -3,8 +3,8 @@ apiVersion: cpd.ibm.com/v1
 metadata:
   name: ibmcpd-dev
   namespace: ibm-cp4s-data
-spec:
-  license:
-    accept: false
-    license: Standard
+#spec:
+#  license:
+#    accept: false
+#    license: Standard
 #  storageClass: managed-nfs-storage
