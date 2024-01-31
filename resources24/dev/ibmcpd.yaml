@@ -2,7 +2,7 @@ kind: Ibmcpd
 apiVersion: cpd.ibm.com/v1
 metadata:
   name: ibmcpd-dev
-  namespace: ibm-cp4s-data
+#  namespace: ibm-cp4s-data
 spec:
   license:
     accept: false
