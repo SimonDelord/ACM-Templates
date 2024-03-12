@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: max-object-detector
+  namespace: simon-ai
+  labels:
+    app: max-object-detector
+    app.kubernetes.io/component: max-object-detector
+    app.kubernetes.io/instance: max-object-detector
+    app.kubernetes.io/name: max-object-detector
+    app.kubernetes.io/part-of: max-object-detector-app
+    app.openshift.io/runtime-version: latest  
+spec:
+  type: ClusterIP
+  ports:
+    - name: 5000-tcp
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  internalTrafficPolicy: Cluster
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: max-object-detector
+    deployment: max-object-detector
+status:
+  loadBalancer: {}
