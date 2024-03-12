@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: max-object-detector
+  namespace: simon-ai
+  labels:
+    app: max-object-detector
+    app.kubernetes.io/component: max-object-detector
+    app.kubernetes.io/instance: max-object-detector
+    app.kubernetes.io/name: max-object-detector
+    app.kubernetes.io/part-of: max-object-detector-app
+    app.openshift.io/runtime-version: latest
+  annotations:
+    openshift.io/host.generated: 'true'  
+spec:
+  to:
+    kind: Service
+    name: max-object-detector
+    weight: 100
+  port:
+    targetPort: 5000-tcp
+  wildcardPolicy: None
