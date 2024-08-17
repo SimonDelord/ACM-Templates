@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  annotations:
+    operators.operatorframework.io/index-image: 'quay.io/operator-framework/opm:latest'
+  name: python-ctner1-catalog
+  namespace: simon-demo
+spec:
+  displayName: python-ctner1-catalog
+  grpcPodConfig:
+    securityContextConfig: legacy
+  publisher: operator-sdk
+  image: quay.io/rhn_support_sdelord/python-ctner1-catalog:latest
+  secrets:
+    - ''
+  sourceType: grpc
