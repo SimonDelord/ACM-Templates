@@ -1,0 +1,177 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  annotations:
+    kubevirt.io/latest-observed-api-version: v1
+    kubevirt.io/storage-observed-api-version: v1
+    vm.kubevirt.io/validations: |
+      [
+        {
+          "name": "minimal-required-memory",
+          "path": "jsonpath::.spec.domain.memory.guest",
+          "rule": "integer",
+          "message": "This VM requires more memory.",
+          "min": 536870912
+        }, {
+          "name": "windows-virtio-bus",
+          "path": "jsonpath::.spec.domain.devices.disks[*].disk.bus",
+          "valid": "jsonpath::.spec.domain.devices.disks[*].disk.bus",
+          "rule": "enum",
+          "message": "virtio disk bus type has better performance, install virtio drivers in VM and change bus type",
+          "values": ["virtio"],
+          "justWarning": true
+        }, {
+          "name": "windows-disk-bus",
+          "path": "jsonpath::.spec.domain.devices.disks[*].disk.bus",
+          "valid": "jsonpath::.spec.domain.devices.disks[*].disk.bus",
+          "rule": "enum",
+          "message": "disk bus has to be either virtio or sata or scsi",
+          "values": ["virtio", "sata", "scsi"]
+        }, {
+          "name": "windows-cd-bus",
+          "path": "jsonpath::.spec.domain.devices.disks[*].cdrom.bus",
+          "valid": "jsonpath::.spec.domain.devices.disks[*].cdrom.bus",
+          "rule": "enum",
+          "message": "cd bus has to be sata",
+          "values": ["sata"]
+        }
+      ]
+  name: win2k19-gitops
+  generation: 1
+  namespace: vmexamples-user1
+  finalizers:
+    - kubevirt.io/virtualMachineControllerFinalize
+  labels:
+    app: win2k19-gitops
+    vm.kubevirt.io/template: windows2k19-server-medium
+    vm.kubevirt.io/template.namespace: openshift
+    vm.kubevirt.io/template.revision: '1'
+    vm.kubevirt.io/template.version: v0.29.4
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        annotations:
+          cdi.kubevirt.io/storage.bind.immediate.requested: 'true'
+        creationTimestamp: null
+        name: win2k19-gitops
+      spec:
+        source:
+          blank: {}
+        storage:
+          resources:
+            requests:
+              storage: 60Gi
+    - metadata:
+        creationTimestamp: null
+        name: win2k19-gitops-installation-cdrom
+      spec:
+        source:
+          http:
+            url: 'https://catalog-item-assets.s3.us-east-2.amazonaws.com/qcow_images/Windows2019.iso'
+        storage:
+          resources:
+            requests:
+              storage: 5Gi
+  running: true
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: medium
+        vm.kubevirt.io/os: windows2k19
+        vm.kubevirt.io/workload: server
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: win2k19-gitops
+        kubevirt.io/size: medium
+        network.kubevirt.io/headlessService: headless
+    spec:
+      architecture: amd64
+      domain:
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+          utc: {}
+        cpu:
+          cores: 1
+          sockets: 4
+          threads: 1
+        devices:
+          disks:
+            - bootOrder: 2
+              disk:
+                bus: sata
+              name: rootdisk
+            - bootOrder: 3
+              cdrom:
+                bus: sata
+              name: windows-drivers-disk
+            - bootOrder: 1
+              cdrom:
+                bus: sata
+              name: installation-cdrom
+            - cdrom:
+                bus: sata
+              name: sysprep
+          inputs:
+            - bus: usb
+              name: tablet
+              type: tablet
+          interfaces:
+            - macAddress: '02:46:63:00:00:07'
+              masquerade: {}
+              model: e1000e
+              name: default
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            reenlightenment: {}
+            ipi: {}
+            synic: {}
+            synictimer:
+              direct: {}
+            spinlocks:
+              spinlocks: 8191
+            reset: {}
+            relaxed: {}
+            vpindex: {}
+            runtime: {}
+            tlbflush: {}
+            frequencies: {}
+            vapic: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            bios: {}
+        machine:
+          type: pc-q35-rhel9.4.0
+        memory:
+          guest: 8Gi
+        resources: {}
+      networks:
+        - name: default
+          pod: {}
+      terminationGracePeriodSeconds: 3600
+      volumes:
+        - dataVolume:
+            name: win2k19-gitops
+          name: rootdisk
+        - containerDisk:
+            image: 'registry.redhat.io/container-native-virtualization/virtio-win-rhel9@sha256:93d399b814b0887763bcabc969df767e3501c9ab23278b277bb8f31062ab615c'
+          name: windows-drivers-disk
+        - dataVolume:
+            name: win2k19-gitops-installation-cdrom
+          name: installation-cdrom
+        - name: sysprep
+          sysprep:
+            configMap:
+              name: sysprep-win2k19-by-gui-rqw1ev
