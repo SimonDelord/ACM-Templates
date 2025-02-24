@@ -174,4 +174,4 @@ spec:
         - name: sysprep
           sysprep:
             configMap:
-              name: sysprep-win2k19-by-gui-rqw1ev
+              name: sysprep-win2k19-gitops-rqw1ev
