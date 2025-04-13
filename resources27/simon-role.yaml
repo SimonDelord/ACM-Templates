@@ -1,0 +1,80 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: simon-role
+  annotations:
+    openshift.io/description: A user that can get basic information about projects.
+    rbac.authorization.kubernetes.io/autoupdate: 'true'
+rules:
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - snapshot.storage.k8s.io
+    resources:
+      - volumesnapshotclasses
+  - verbs:
+      - get
+    apiGroups:
+      - ''
+      - user.openshift.io
+    resources:
+      - users
+    resourceNames:
+      - '~'
+  - verbs:
+      - list
+    apiGroups:
+      - ''
+      - project.openshift.io
+    resources:
+      - projectrequests
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - ''
+      - authorization.openshift.io
+    resources:
+      - clusterroles
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterroles
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+  - verbs:
+      - list
+      - watch
+    apiGroups:
+      - ''
+      - project.openshift.io
+    resources:
+      - projects
+  - verbs:
+      - create
+    apiGroups:
+      - ''
+      - authorization.openshift.io
+    resources:
+      - selfsubjectrulesreviews
+  - verbs:
+      - create
+    apiGroups:
+      - authorization.k8s.io
+    resources:
+      - selfsubjectaccessreviews
+aggregationRule:
+  clusterRoleSelectors:
+    - matchLabels:
+        authorization.openshift.io/aggregate-to-basic-user: 'true'
